@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veteran Disability Calculator</title>
+<link rel="stylesheet" href="style.css">
+
+<script src="index.js" defer></script>
+</head>
+<body>
+<div class="calculator">
+    <h2>Veteran Disability Calculator</h2>
+    <div class="body-top-sec">
+        <div class="top-left">
+            <div class="body-part-container">
+                <label><input type="checkbox" class="body-part arm" value="leftArm" data-body-limb="arm">Left Arm</label>
+            </div>
+            <div class="selections">
+                <label><input type="checkbox" class="percentage" value="10"> 10%</label>
+                <label><input type="checkbox" class="percentage" value="20"> 20%</label>
+                <label><input type="checkbox" class="percentage" value="30"> 30%</label>
+                <label><input type="checkbox" class="percentage" value="40"> 40%</label>
+                <label><input type="checkbox" class="percentage" value="50"> 50%</label>
+                <label><input type="checkbox" class="percentage" value="60"> 60%</label>
+                <label><input type="checkbox" class="percentage" value="70"> 70%</label>
+                <label><input type="checkbox" class="percentage" value="80"> 80%</label>
+                <label><input type="checkbox" class="percentage" value="90"> 90%</label>
+                <label><input type="checkbox" class="percentage" value="100"> 100%</label>
+            </div>
+        </div>
+        <div class="top-right">
+            <div class="body-part-container">
+                <label ><input type="checkbox" class="body-part arm" value="rightArm" data-body-limb="arm"> Right Arm</label>
+            </div>
+            <div class="selections">
+                <label><input type="checkbox" class="percentage" value="10"> 10%</label>
+                <label><input type="checkbox" class="percentage" value="20"> 20%</label>
+                <label><input type="checkbox" class="percentage" value="30"> 30%</label>
+                <label><input type="checkbox" class="percentage" value="40"> 40%</label>
+                <label><input type="checkbox" class="percentage" value="50"> 50%</label>
+                <label><input type="checkbox" class="percentage" value="60"> 60%</label>
+                <label><input type="checkbox" class="percentage" value="70"> 70%</label>
+                <label><input type="checkbox" class="percentage" value="80"> 80%</label>
+                <label><input type="checkbox" class="percentage" value="90"> 90%</label>
+                <label><input type="checkbox" class="percentage" value="100"> 100%</label>
+            </div>
+        </div>
+    </div>
+    <div class="body-bottom-sec">
+        <div class="bottom-left">
+            <div class="body-part-container">
+                <label><input type="checkbox" class="body-part leg" value="leftLeg" data-body-limb="leg">Left Leg</label>
+            </div>
+            <div class="selections">
+                <label><input type="checkbox" class="percentage" value="10"> 10%</label>
+                <label><input type="checkbox" class="percentage" value="20"> 20%</label>
+                <label><input type="checkbox" class="percentage" value="30"> 30%</label>
+                <label><input type="checkbox" class="percentage" value="40"> 40%</label>
+                <label><input type="checkbox" class="percentage" value="50"> 50%</label>
+                <label><input type="checkbox" class="percentage" value="60"> 60%</label>
+                <label><input type="checkbox" class="percentage" value="70"> 70%</label>
+                <label><input type="checkbox" class="percentage" value="80"> 80%</label>
+                <label><input type="checkbox" class="percentage" value="90"> 90%</label>
+                <label><input type="checkbox" class="percentage" value="100"> 100%</label>
+            </div>
+        </div>
+        
+        <div class="bottom-right">
+            <div class="body-part-container">
+                <label><input type="checkbox" class="body-part leg" value="rightLeg" data-body-limb="leg"> Right Leg</label>
+            </div>
+            <div class="selections">
+                <label><input type="checkbox" class="percentage" value="10"> 10%</label>
+                <label><input type="checkbox" class="percentage" value="20"> 20%</label>
+                <label><input type="checkbox" class="percentage" value="30"> 30%</label>
+                <label><input type="checkbox" class="percentage" value="40"> 40%</label>
+                <label><input type="checkbox" class="percentage" value="50"> 50%</label>
+                <label><input type="checkbox" class="percentage" value="60"> 60%</label>
+                <label><input type="checkbox" class="percentage" value="70"> 70%</label>
+                <label><input type="checkbox" class="percentage" value="80"> 80%</label>
+                <label><input type="checkbox" class="percentage" value="90"> 90%</label>
+                <label><input type="checkbox" class="percentage" value="100"> 100%</label>
+            </div>
+        </div>
+    </div>
+    <div class="options-sec">
+        <div class="marital-status">
+            <div>What is Your Marital Status?</div>
+            <label><input class="optional" type="checkbox">Single</label>
+            <label><input class="optional" type="checkbox" id="withSpouse">Married</label>
+        </div>
+        <div class="dependent-parents">
+            <div>Do You Have Any Dependent Parents?</div>
+            <label><input class="optional" type="checkbox" id="withOneParent">One Parent</label>
+            <label><input class="optional" type="checkbox" id="withTwoParents">Two Parents</label>
+        </div>
+    </div>
+
+  <div class="dependent-children-container">
+    <div class="dependent-children">
+        <label for="childrenUnder18">Dependent Children Under 18: </label>
+        <select class="dependent-dropdown" id="childrenUnder18">
+            <option id="0" value="0">0</option>
+            <option id="1" value="1">1</option>
+            <option id="2" value="2">2</option>
+            <option id="3" value="3">3</option>
+            <option id="4" value="4">4</option>
+            <option id="5" value="5">5</option>
+            <option id="6" value="6">6</option>
+            <option id="7" value="7">7</option>
+            <option id="8" value="8">8</option>
+            <option id="9" value="9">9</option>
+            <option id="10" value="10">10</option>
+            </select>
+        </div>
+        <div class="dependent-children">
+            <label for="childrenOver18">Dependent Children Over 18:</label>
+            <select class="dependent-dropdown" id="childrenOver18">
+                <option id="11" value="0">0</option>
+                <option id="12" value="1">1</option>
+                <option id="13" value="2">2</option>
+                <option id="14" value="3">3</option>
+                <option id="15" value="4">4</option>
+                <option id="16" value="5">5</option>
+                <option id="17" value="6">6</option>
+                <option id="18" value="7">7</option>
+                <option id="19" value="8">8</option>
+                <option id="20" value="9">9</option>
+                <option id="21" value="10">10</option>
+            </select>
+        </div>
+    </div>
+
+  <div class="estimated-total">
+    <div class="percent-dollar">
+        <div class="totals">Combined Disability: <span id="result">0%</span></div>
+        <div class="totals">Estimated Monthly Compensation: <span id="compensation">$0.00</span></div>
+    </div>
+    <button id="clearSelections" class="clear-btn">Clear Selections</button>
+  </div>
+</div>
+
+</body>
+</html>
