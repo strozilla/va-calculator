@@ -187,8 +187,6 @@ function calculateCompensation() {
 	}
 
 	console.log(limb)
-	console.log(disabilities)
-	console.log(bilateralDisabilities)
 
 	var combinedPercentage =
 		disabilities.reduce(function (acc, cur) {
@@ -232,17 +230,22 @@ function calculateCompensation() {
 		if (childrenUnder18 > 0) {
 			if (!selectedOptions.includes('withOneChild')) {
 				selectedOptions.push('withOneChild')
-      }
-      if (childrenUnder18 > 1) {
-        var additionalChildUnder18 = childrenUnder18 - 1
-        if (additionalChildUnder18 > 0) {
-          totalCompensation +=
-            additionalChildUnder18 *
-            compensationRates[combinedPercentage]['additionalChildUnder18']
-        }
-      } else {
-        totalCompensation = compensationRates[combinedPercentage]['withOneChild']
-      }
+				totalCompensation =
+					compensationRates[combinedPercentage][selectedOptions.join('')]
+				console.log(totalCompensation)
+			}
+
+			if (childrenUnder18 > 1) {
+				var additionalChildUnder18 = childrenUnder18 - 1
+				if (additionalChildUnder18 > 0) {
+					totalCompensation +=
+						additionalChildUnder18 *
+						compensationRates[combinedPercentage]['additionalChildUnder18']
+				}
+			} else {
+				totalCompensation =
+					compensationRates[combinedPercentage][selectedOptions.join('')]
+			}
 		} else {
 			selectedOptions = selectedOptions.filter(
 				(option) => option !== 'withOneChild'
@@ -252,33 +255,25 @@ function calculateCompensation() {
 		if (childrenOver18 > 0) {
 			if (!selectedOptions.includes('withOneChild')) {
 				selectedOptions.push('withOneChild')
-      }
-      if (childrenOver18 > 1) {
-			var additionalChildOver18 = childrenOver18 - 1
-			if (additionalChildOver18 > 0) {
-				totalCompensation +=
-					additionalChildOver18 *
-					compensationRates[combinedPercentage]['additionalChildOver18']
-      }
-    } else {
-      totalCompensation = compensationRates[combinedPercentage]['withOneChild']
-    }
+			}
+
+			if (childrenOver18 > 1) {
+				var additionalChildOver18 = childrenOver18 - 1
+				if (additionalChildOver18 > 0) {
+					totalCompensation +=
+						additionalChildOver18 *
+						compensationRates[combinedPercentage]['additionalChildOver18']
+				}
+			} else {
+				totalCompensation =
+					compensationRates[combinedPercentage]['withOneChild']
+			}
 		} else {
 			selectedOptions = selectedOptions.filter(
 				(option) => option !== 'withOneChild'
 			)
 		}
-
-		// Concatenate selected options to match in the compensationRates object
-		var concatenatedOptions = selectedOptions.join('')
-		console.log(selectedOptions)
-
-		// Adjust based on selected options
-		if (compensationRates[combinedPercentage][concatenatedOptions]) {
-			totalCompensation =
-				compensationRates[combinedPercentage][concatenatedOptions]
-		}
-
+		console.log(totalCompensation)
 		// Update total compensation display
 		var compensation = document.getElementById('compensation')
 		compensation.innerHTML = '$' + totalCompensation.toFixed(2)
@@ -291,22 +286,18 @@ function calculateCompensation() {
 		.getElementById('childrenOver18')
 		.addEventListener('change', updateTotalCompensation)
 
-	// Concatenate selected options to match in the compensationRates object
-	var concatenatedOptions = selectedOptions.join('')
-	console.log(selectedOptions)
-
 	// Adjust based on selected options
-	if (compensationRates[combinedPercentage][concatenatedOptions]) {
+	if (compensationRates[combinedPercentage][selectedOptions.join('')]) {
 		totalCompensation =
-			compensationRates[combinedPercentage][concatenatedOptions]
+			compensationRates[combinedPercentage][selectedOptions.join('')]
 	}
 
 	console.log(totalCompensation)
 
-var compensation = document.getElementById('compensation')
-compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+	var compensation = document.getElementById('compensation')
+	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 
-resultSpan.innerHTML = combinedPercentage + '%'
+	resultSpan.innerHTML = combinedPercentage + '%'
 }
 
 
