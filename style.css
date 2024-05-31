@@ -13,18 +13,22 @@ body {
 }
 
 
-.body-top-sec, .body-bottom-sec {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 4em;
-  margin: 4em 0;
+.body-part-sec {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+  gap: 1em;
+  margin: 2em 0;
 }
 
 .top-left, .top-right, .bottom-left, .bottom-right {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
+  width: fit-content;
+  margin: auto;
+
+}
+
+.body-part-sec button {
+  width: 150px;
+  height: 50px;
 }
 
 .body-part-container {
@@ -37,25 +41,25 @@ body {
   gap: 1em;
 }
 
-.percentage, .body-part, .optional {
+.optional {
   position: absolute;
   display: none;
 }
 
-.body-part-container label {
+.body-part-container button {
   background-color: #ccc;
   font-weight: bold;
   font-size: 1.5em;
   padding: 1em 2em;
   margin: 0.5em;
 }
-.body-part-container label:hover, .selections label:hover, .marital-status label:hover, .dependent-parents label:hover {
+.body-part-container button:hover, .selections button:hover, .marital-status label:hover, .dependent-parents label:hover {
   background-color: #2d5b87;
   color: #fff;
   cursor: pointer;
 }
 
-.selections label, .marital-status label, .dependent-parents label {
+.selections button, .marital-status label, .dependent-parents label {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -133,4 +137,26 @@ body {
   cursor: pointer;
   font-size: 1.25em;
   margin-left: 2em;
+}
+
+.selections-display {
+    margin-top: 20px;
+}
+
+.selection-box {
+    display: inline-block;
+    padding: 10px;
+    margin: 5px;
+    background-color: #2d5b87;
+    color: #fff;
+    border-radius: 4px;
+    position: relative;
+    width: auto;
+}
+
+.selection-box .remove-box {
+    cursor: pointer;
+    color: #f1f1f1;
+    padding: 5px;
+    font-size: .75em;
 }
