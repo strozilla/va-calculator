@@ -139,211 +139,6 @@ const compensationRates = {
 	}
 }
 
-// document.querySelectorAll('.body-part').forEach(function (part) {
-// 	part.addEventListener('change', function () {
-// 		calculateCompensation()
-// 	})
-// })
-
-// document.querySelectorAll('.percentage').forEach(function (percentage) {
-// 	percentage.addEventListener('change', function () {
-// 		calculateCompensation()
-// 	})
-// })
-
-// document.querySelectorAll('.optional').forEach(function (optional) {
-// 	optional.addEventListener('change', function () {
-// 		calculateCompensation()
-// 	})
-// })
-
-// function calculateCompensation() {
-// 	var disabilities = []
-// 	var bilateralDisabilities = []
-// 	var limbChecked = false
-// 	var limb = []
-
-// 	document.querySelectorAll('.body-part:checked').forEach(function (bodyPart) {
-// 		limbChecked = true
-// 		limb.push(bodyPart.getAttribute('data-body-limb'))
-// 	})
-
-// 	// If a body-part checkbox is checked, loop through the percentage checkboxes
-// 	if (limbChecked) {
-// 		document
-// 			.querySelectorAll('.percentage:checked')
-// 			.forEach(function (percentage) {
-// 				var value = parseInt(percentage.value)
-// 				disabilities.push(value)
-// 				if (disabilities.length > 1 && limb.length > 1) {
-// 					disabilities.forEach(function (disability) {
-// 						bilateralDisabilities.push(disability) // Push each disability to bilateralDisabilities
-// 					})
-// 				}
-// 			})
-// 	}
-
-// 	console.log(limb)
-
-// 	var combinedPercentage =
-// 		disabilities.reduce(function (acc, cur) {
-// 			return acc * (1 - cur / 100)
-// 		}, 1) * 100
-// 	combinedPercentage = 100 - combinedPercentage
-// 	combinedPercentage = Math.round(combinedPercentage / 10) * 10
-// 	console.log(combinedPercentage)
-
-// 	if (bilateralDisabilities.length > 1) {
-// 		var bilateralCombined =
-// 			bilateralDisabilities.reduce(function (acc, cur) {
-// 				return acc * (1 - cur / 100)
-// 			}, 1) * 100
-// 		console.log(bilateralCombined)
-// 		bilateralCombined = 100 - bilateralCombined
-// 		console.log(bilateralCombined)
-// 		bilateralCombined = Math.round(bilateralCombined - 10)
-// 		console.log(bilateralCombined)
-// 		console.log(combinedPercentage)
-
-// 		combinedPercentage =
-// 			Math.round((combinedPercentage + bilateralCombined) / 20) * 10
-// 		console.log(combinedPercentage)
-// 	}
-
-// 	var selectedOptions = []
-// 	document.querySelectorAll('.optional:checked').forEach(function (optional) {
-// 		selectedOptions.push(optional.id)
-// 	})
-
-// 	// Default to single rate
-// 	var totalCompensation = compensationRates[combinedPercentage]['single']
-// 	console.log(totalCompensation)
-
-// 	// Watch dropdowns for changes
-// 	function updateTotalCompensation() {
-// 		var childrenUnder18 = parseInt(
-// 			document.getElementById('childrenUnder18').value
-// 		)
-// 		var childrenOver18 = parseInt(
-// 			document.getElementById('childrenOver18').value
-// 		)
-
-// 		// Update selectedOptions array
-// 		if (childrenUnder18 > 0) {
-// 			if (!selectedOptions.includes('withOneChild')) {
-// 				selectedOptions.push('withOneChild')
-// 				totalCompensation =
-// 					compensationRates[combinedPercentage][selectedOptions.join('')]
-// 				console.log(totalCompensation)
-// 			}
-
-// 			if (childrenUnder18 > 1) {
-// 				var additionalChildUnder18 = childrenUnder18 - 1
-// 				if (additionalChildUnder18 > 0) {
-// 					totalCompensation +=
-// 						additionalChildUnder18 *
-// 						compensationRates[combinedPercentage]['additionalChildUnder18']
-// 				}
-// 			} else {
-// 				totalCompensation =
-// 					compensationRates[combinedPercentage][selectedOptions.join('')]
-// 			}
-// 		} else {
-// 			selectedOptions = selectedOptions.filter(
-// 				(option) => option !== 'withOneChild'
-// 			)
-// 		}
-
-// 		if (childrenOver18 > 0) {
-// 			if (!selectedOptions.includes('withOneChild')) {
-// 				selectedOptions.push('withOneChild')
-// 			}
-
-// 			if (childrenOver18 > 1) {
-// 				var additionalChildOver18 = childrenOver18 - 1
-// 				if (additionalChildOver18 > 0) {
-// 					totalCompensation +=
-// 						additionalChildOver18 *
-// 						compensationRates[combinedPercentage]['additionalChildOver18']
-// 				}
-// 			} else {
-// 				totalCompensation =
-// 					compensationRates[combinedPercentage]['withOneChild']
-// 			}
-// 		} else {
-// 			selectedOptions = selectedOptions.filter(
-// 				(option) => option !== 'withOneChild'
-// 			)
-// 		}
-// 		console.log(totalCompensation)
-// 		// Update total compensation display
-// 		var compensation = document.getElementById('compensation')
-// 		compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-// 	}
-
-// 	document
-// 		.getElementById('childrenUnder18')
-// 		.addEventListener('change', updateTotalCompensation)
-// 	document
-// 		.getElementById('childrenOver18')
-// 		.addEventListener('change', updateTotalCompensation)
-
-// 	// Adjust based on selected options
-// 	if (compensationRates[combinedPercentage][selectedOptions.join('')]) {
-// 		totalCompensation =
-// 			compensationRates[combinedPercentage][selectedOptions.join('')]
-// 	}
-
-// 	console.log(totalCompensation)
-
-// 	var compensation = document.getElementById('compensation')
-// 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-
-// 	resultSpan.innerHTML = combinedPercentage + '%'
-// }
-
-// // Call the function whenever there's a change in the checkboxes or dropdowns
-// document
-// 	.querySelectorAll('.optional, .body-part, .percentage')
-// 	.forEach(function (element) {
-// 		element.addEventListener('change', function () {
-// 			calculateCompensation()
-// 		})
-// 	})
-
-// // clear all selections
-// document
-// 	.getElementById('clearSelections')
-// 	.addEventListener('click', function () {
-// 		// Clear all checkboxes
-// 		document
-// 			.querySelectorAll('input[type="checkbox"]')
-// 			.forEach(function (checkbox) {
-// 				checkbox.checked = false
-// 				checkbox.parentElement.classList.remove('checked')
-// 			})
-
-// 		// Reset dropdowns to default value
-// 		document.getElementById('childrenUnder18').value = '0'
-// 		document.getElementById('childrenOver18').value = '0'
-// 		compensation.innerHTML = '0.00'
-// 		resultSpan.innerHTML = '0'
-
-// 		calculateCompensation()
-// 	})
-
-// // Add a class to the parent label when the checkbox is checked
-// document
-// 	.querySelectorAll('input[type="checkbox"]')
-// 	.forEach(function (checkbox) {
-// 		checkbox.addEventListener('change', function () {
-// 			if (checkbox.checked) {
-// 				checkbox.parentElement.classList.add('checked')
-// 			} else {
-// 				checkbox.parentElement.classList.remove('checked')
-// 			}
-// 		})
-// 	})
 let limb = []
 let disabilities = []
 let bilateralDisabilities = []
@@ -368,7 +163,7 @@ function calculateCompensation() {
 			if (selectedBodyPart) {
 				selectionText = `${selectedBodyPart} ${value}%`
 				limb.push(selectedBodyPart)
-				selectedBodyPart = null // Clear the selected body part after use
+				selectedBodyPart = null
 			}
 
 			disabilities.push(value)
@@ -385,153 +180,6 @@ function calculateCompensation() {
 		})
 	})
 
-	function addSelectionBox(text) {
-		var selectionsDisplay = document.getElementById('selectionsDisplay')
-		var box = document.createElement('div')
-		box.className = 'selection-box'
-		box.innerHTML = `${text} <span class="remove-box">X</span>`
-		selectionsDisplay.appendChild(box)
-
-		box.querySelector('.remove-box').addEventListener('click', function () {
-			removeSelection(text, box)
-		})
-	}
-
-	function removeSelection(text, box) {
-		var index
-
-		if (text.endsWith('%')) {
-			var value = parseInt(text)
-			index = disabilities.indexOf(value)
-			if (index !== -1) disabilities.splice(index, 1)
-		} else {
-			index = limb.indexOf(text)
-			if (index !== -1) limb.splice(index, 1)
-		}
-
-		box.remove()
-		updateTotalCompensation()
-	}
-
-	function updateTotalCompensation() {
-		combinedPercentage =
-			disabilities.reduce(function (acc, cur) {
-				return acc * (1 - cur / 100)
-			}, 1) * 100
-		combinedPercentage = 100 - combinedPercentage
-		combinedPercentage = Math.round(combinedPercentage / 10) * 10
-		console.log(combinedPercentage)
-
-		selectedOptions = []
-		document.querySelectorAll('.optional:checked').forEach(function (optional) {
-			selectedOptions.push(optional.id)
-		})
-		console.log(selectedOptions)
-
-		if (bilateralDisabilities.length > 1) {
-			var bilateralCombined =
-				bilateralDisabilities.reduce(function (acc, cur) {
-					return acc * (1 - cur / 100)
-				}, 1) * 100
-			bilateralCombined = 100 - bilateralCombined
-			bilateralCombined = Math.round(bilateralCombined - 10)
-
-			combinedPercentage =
-				Math.round((combinedPercentage + bilateralCombined) / 20) * 10
-		}
-		document.getElementById('result').innerHTML = combinedPercentage + '%'
-
-		var compensation = document.getElementById('compensation')
-
-		document.getElementById('result').innerHTML = combinedPercentage + '%'
-
-		console.log(totalCompensation)
-
-		// Default to single rate
-		var totalCompensation = compensationRates[combinedPercentage]['single']
-
-		// Watch dropdowns for changes
-
-		var childrenUnder18 = parseInt(
-			document.getElementById('childrenUnder18').value
-		)
-		var childrenOver18 = parseInt(
-			document.getElementById('childrenOver18').value
-		)
-
-		// Update selectedOptions array
-		if (childrenUnder18 > 0) {
-			if (!selectedOptions.includes('withOneChild')) {
-				selectedOptions.push('withOneChild')
-				totalCompensation =
-					compensationRates[combinedPercentage][selectedOptions.join('')]
-				console.log(totalCompensation)
-			}
-
-			if (childrenUnder18 > 1) {
-				var additionalChildUnder18 = childrenUnder18 - 1
-				if (additionalChildUnder18 > 0) {
-					totalCompensation +=
-						additionalChildUnder18 *
-						compensationRates[combinedPercentage]['additionalChildUnder18']
-				}
-			} else {
-				totalCompensation =
-					compensationRates[combinedPercentage][selectedOptions.join('')]
-			}
-		} else {
-			selectedOptions = selectedOptions.filter(
-				(option) => option !== 'withOneChild'
-			)
-		}
-
-		if (childrenOver18 > 0) {
-			if (!selectedOptions.includes('withOneChild')) {
-				selectedOptions.push('withOneChild')
-			}
-
-			if (childrenOver18 > 1) {
-				var additionalChildOver18 = childrenOver18 - 1
-				if (additionalChildOver18 > 0) {
-					totalCompensation +=
-						additionalChildOver18 *
-						compensationRates[combinedPercentage]['additionalChildOver18']
-				}
-			} else {
-				totalCompensation =
-					compensationRates[combinedPercentage]['withOneChild']
-			}
-		} else {
-			selectedOptions = selectedOptions.filter(
-				(option) => option !== 'withOneChild'
-			)
-		}
-		console.log(totalCompensation)
-		// Update total compensation display
-		compensation = document.getElementById('compensation')
-		compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-		document.getElementById('result').innerHTML = combinedPercentage + '%'
-
-		document
-			.getElementById('childrenUnder18')
-			.addEventListener('change', updateTotalCompensation)
-		document
-			.getElementById('childrenOver18')
-			.addEventListener('change', updateTotalCompensation)
-
-		// Adjust based on selected options
-		if (compensationRates[combinedPercentage][selectedOptions.join('')]) {
-			totalCompensation =
-				compensationRates[combinedPercentage][selectedOptions.join('')]
-		}
-
-		console.log(totalCompensation)
-
-		compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-
-		resultSpan.innerHTML = combinedPercentage + '%'
-	}
-
 	document.querySelectorAll('.optional').forEach(function (element) {
 		element.addEventListener('change', function () {
 			updateTotalCompensation()
@@ -539,12 +187,167 @@ function calculateCompensation() {
 	})
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	resultSpan.innerHTML = combinedPercentage + '%'
+
+	updateTotalCompensation()
+}
+
+function addSelectionBox(text) {
+	var selectionsDisplay = document.getElementById('selectionsDisplay')
+	var box = document.createElement('div')
+	box.className = 'selection-box'
+	box.innerHTML = `${text} <span class="remove-box">X</span>`
+	selectionsDisplay.appendChild(box)
+
+	box.querySelector('.remove-box').addEventListener('click', function () {
+		removeSelection(text, box)
+	})
+}
+
+function removeSelection(text, box) {
+	var index
+
+	if (text.endsWith('%')) {
+		var value = parseInt(text)
+		index = disabilities.indexOf(value)
+		if (index !== -1) disabilities.splice(index, 1)
+	} else {
+		index = limb.indexOf(text)
+		if (index !== -1) limb.splice(index, 1)
+	}
+
+	box.remove()
+	updateTotalCompensation()
+}
+
+function updateTotalCompensation() {
+	var selectionsDisplay = document.getElementById('selectionsDisplay')
+	if (selectionsDisplay.childNodes.length === 0) {
+		combinedPercentage = 0
+		totalCompensation = 0
+		document.getElementById('result').innerHTML = '0%'
+		document.getElementById('compensation').innerHTML = '$0.00'
+		return
+	}
+
+	combinedPercentage =
+		disabilities.reduce(function (acc, cur) {
+			return acc * (1 - cur / 100)
+		}, 1) * 100
+	combinedPercentage = 100 - combinedPercentage
+	combinedPercentage = Math.round(combinedPercentage / 10) * 10
+	console.log(combinedPercentage)
+
+	selectedOptions = []
+	document.querySelectorAll('.optional:checked').forEach(function (optional) {
+		selectedOptions.push(optional.id)
+	})
 	console.log(selectedOptions)
+
+	if (bilateralDisabilities.length > 1) {
+		var bilateralCombined =
+			bilateralDisabilities.reduce(function (acc, cur) {
+				return acc * (1 - cur / 100)
+			}, 1) * 100
+		bilateralCombined = 100 - bilateralCombined
+		bilateralCombined = Math.round(bilateralCombined - 10)
+
+		combinedPercentage =
+			Math.round((combinedPercentage + bilateralCombined) / 20) * 10
+	}
+	document.getElementById('result').innerHTML = combinedPercentage + '%'
+
+	var compensation = document.getElementById('compensation')
+
+	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
 	console.log(totalCompensation)
 
-	// Initial calculation when the page loads
-	updateTotalCompensation()
+	// Default to single rate
+	var totalCompensation = compensationRates[combinedPercentage]['single']
+
+	// Watch dropdowns for changes
+	var childrenUnder18 = parseInt(
+		document.getElementById('childrenUnder18').value
+	)
+	var childrenOver18 = parseInt(document.getElementById('childrenOver18').value)
+
+	// Update selectedOptions array
+	if (childrenUnder18 > 0) {
+		if (!selectedOptions.includes('withOneChild')) {
+			selectedOptions.push('withOneChild')
+			totalCompensation =
+				compensationRates[combinedPercentage][selectedOptions.join('')]
+
+			console.log(totalCompensation + ' with one child')
+		}
+
+		if (childrenUnder18 > 1) {
+			var addChildUnder18 = childrenUnder18 - 1
+			console.log(addChildUnder18)
+			if (addChildUnder18 > 0) {
+				totalCompensation +=
+					addChildUnder18 *
+					compensationRates[combinedPercentage]['additionalChildUnder18']
+			}
+		} else {
+			totalCompensation =
+				compensationRates[combinedPercentage][selectedOptions.join('')]
+		}
+	} else {
+		selectedOptions = selectedOptions.filter(
+			(option) => option !== 'withOneChild'
+		)
+	}
+
+	if (childrenOver18 > 0) {
+		if (!selectedOptions.includes('withOneChild')) {
+			selectedOptions.push('withOneChild')
+		}
+
+		if (childrenOver18 > 1) {
+			var addChildOver18 = childrenOver18 - 1
+			if (addChildOver18 > 0) {
+				totalCompensation +=
+					addChildOver18 *
+					compensationRates[combinedPercentage]['additionalChildOver18']
+			}
+		} else {
+			totalCompensation = compensationRates[combinedPercentage]['withOneChild']
+		}
+	} else {
+		selectedOptions = selectedOptions.filter(
+			(option) => option !== 'withOneChild'
+		)
+	}
+
+	const selectedOptionKey = selectedOptions.join('')
+	if (compensationRates[combinedPercentage][selectedOptionKey]) {
+		totalCompensation = compensationRates[combinedPercentage][selectedOptionKey]
+	}
+	console.log(totalCompensation)
+	// Update total compensation display
+	compensation = document.getElementById('compensation')
+	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+	document.getElementById('result').innerHTML = combinedPercentage + '%'
+
+	document
+		.getElementById('childrenUnder18')
+		.addEventListener('change', updateTotalCompensation)
+	document
+		.getElementById('childrenOver18')
+		.addEventListener('change', updateTotalCompensation)
+
+	// Adjust based on selected options
+	if (compensationRates[combinedPercentage][selectedOptions.join('')]) {
+		totalCompensation =
+			compensationRates[combinedPercentage][selectedOptions.join('')]
+	}
+
+	console.log(totalCompensation)
+
+	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+
+	resultSpan.innerHTML = combinedPercentage + '%'
 }
 
 function clearTotals() {
@@ -552,6 +355,10 @@ function clearTotals() {
 		.querySelectorAll('input[type="checkbox"]')
 		.forEach(function (checkbox) {
 			checkbox.checked = false
+			let label = checkbox.closest('label')
+			if (label) {
+				label.classList.remove('checked')
+			}
 		})
 	document.getElementById('childrenUnder18').value = '0'
 	document.getElementById('childrenOver18').value = '0'
@@ -568,7 +375,39 @@ function clearTotals() {
 	compensation = document.getElementById('compensation')
 	compensation.innerHTML = '$' + 0.0
 	document.getElementById('result').innerHTML = 0 + '%'
+
 	updateTotalCompensation()
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+	function handleCheckboxChange(event) {
+		const group = event.target.closest('div')
+		const checkboxes = group.querySelectorAll('.optional')
+
+		checkboxes.forEach((checkbox) => {
+			if (checkbox !== event.target) {
+				checkbox.checked = false
+				const otherLabel = checkbox.closest('label')
+				otherLabel.classList.remove('checked')
+			}
+		})
+
+		let label = event.target.closest('label')
+		if (event.target.checked) {
+			label.classList.add('checked')
+		} else {
+			label.classList.remove('checked')
+		}
+
+		updateTotalCompensation()
+		console.log(totalCompensation)
+	}
+
+	document.querySelectorAll('.optional').forEach((checkbox) => {
+		checkbox.addEventListener('change', handleCheckboxChange)
+	})
+})
+
+
 
 calculateCompensation()
