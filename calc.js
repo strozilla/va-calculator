@@ -6,14 +6,14 @@ const compensationRates = {
 		withSpouse: 586.31,
 		withSpousewithoneParent: 636.31,
 		withSpousewithTwoParents: 686.31,
-		withOneParent: 574.31,
-		withTwoParents: 624.331,
-		withOneChild: 565.31,
+		singlewithOneParent: 574.31,
+		singlewithTwoParents: 624.331,
+		singlewithOneChild: 565.31,
 		withSpousewithOneChild: 632.21,
-		withSpousewithoneParentwithOneChild: 682.31,
+		withSpousewithOneParentwithOneChild: 682.31,
 		withSpousewithTwoParentswithOneChild: 732.31,
-		withOneParentwithOneChild: 615.31,
-		withTwoParentswithOneChild: 665.31,
+		singlewithOneParentwithOneChild: 615.31,
+		sinlgewithTwoParentswithOneChild: 665.31,
 		additionalChildUnder18: 31.0,
 		additionalChildOver18: 100.0,
 		aidAndAttendance: 57.0
@@ -27,7 +27,7 @@ const compensationRates = {
 		withTwoParents: 887.28,
 		withOneChild: 810.28,
 		withSpousewithOneChild: 899.28,
-		withSpousewithoneParentwithOneChild: 965.28,
+		withSpousewithOneParentwithOneChild: 965.28,
 		withSpousewithTwoParentswithOneChild: 1031.28,
 		withOneParentwithOneChild: 876.28,
 		withTwoParentswithOneChild: 942.28,
@@ -44,7 +44,7 @@ const compensationRates = {
 		withTwoParents: 1144.16,
 		withOneChild: 1241.16,
 		withSpousewithOneChild: 1255.16,
-		withSpousewithoneParentwithOneChild: 1338.16,
+		withSpousewithOneParentwithOneChild: 1338.16,
 		withSpousewithTwoParentswithOneChild: 1421.16,
 		withOneParentwithOneChild: 1227.16,
 		withTwoParentswithOneChild: 1310.16,
@@ -61,7 +61,7 @@ const compensationRates = {
 		withTwoParents: 1561.88,
 		withOneChild: 1444.88,
 		withSpousewithOneChild: 1577.88,
-		withSpousewithoneParentwithOneChild: 1677.88,
+		withSpousewithOneParentwithOneChild: 1677.88,
 		withSpousewithTwoParentswithOneChild: 1777.88,
 		withOneParentwithOneChild: 1544.88,
 		withTwoParentswithOneChild: 1644.88,
@@ -74,14 +74,14 @@ const compensationRates = {
 		withSpouse: 1861.28,
 		withSpousewithOneParent: 1978.28,
 		withSpousewithTwoParents: 2095.28,
-		withOneParent: 1833.28,
-		withTwoParents: 1950.28,
-		withOneChild: 1813.28,
+		singlewithOneParent: 1833.28,
+		singlewithTwoParents: 1950.28,
+		singlewithOneChild: 1813.28,
 		withSpousewithOneChild: 1968.28,
-		withSpousewithoneParentwithOneChild: 2085.28,
+		withSpousewithOneParentwithOneChild: 2085.28,
 		withSpousewithTwoParentswithOneChild: 2202.28,
-		withOneParentwithOneChild: 1930.28,
-		withTwoParentswithOneChild: 2047.28,
+		singlewithOneParentwithOneChild: 1930.28,
+		singlewithTwoParentswithOneChild: 2047.28,
 		additionalChildUnder18: 72.0,
 		additionalChildOver18: 234.0,
 		aidAndAttendance: 134.0
@@ -95,7 +95,7 @@ const compensationRates = {
 		withTwoParents: 2261.01,
 		withOneChild: 2106.01,
 		withSpousewithOneChild: 2283.01,
-		withSpousewithoneParentwithOneChild: 2416.01,
+		withSpousewithOneParentwithOneChild: 2416.01,
 		withSpousewithTwoParentswithOneChild: 2549.01,
 		withOneParentwithOneChild: 2239.01,
 		withTwoParentswithOneChild: 2372.01,
@@ -112,7 +112,7 @@ const compensationRates = {
 		withTwoParents: 2541.91,
 		withOneChild: 2366.91,
 		withSpousewithOneChild: 2565.91,
-		withSpousewithoneParentwithOneChild: 2715.91,
+		withSpousewithOneParentwithOneChild: 2715.91,
 		withSpousewithTwoParentswithOneChild: 2865.91,
 		withOneParentwithOneChild: 2516.91,
 		withTwoParentswithOneChild: 2666.91,
@@ -143,6 +143,8 @@ let limb = []
 let disabilities = []
 let bilateralDisabilities = []
 let selectedOptions = []
+let selectionsDisplay
+let compensation = ''
 let totalCompensation = 0
 let combinedPercentage = 0
 let selectedBodyPart = null
@@ -157,8 +159,8 @@ function calculateCompensation() {
 
 	document.querySelectorAll('.percentage').forEach(function (button) {
 		button.addEventListener('click', function () {
-			var value = parseInt(button.value)
-			var selectionText = `${value}%`
+			let value = parseInt(button.value)
+			let selectionText = `${value}%`
 
 			if (selectedBodyPart) {
 				selectionText = `${selectedBodyPart} ${value}%`
@@ -192,8 +194,8 @@ function calculateCompensation() {
 }
 
 function addSelectionBox(text) {
-	var selectionsDisplay = document.getElementById('selectionsDisplay')
-	var box = document.createElement('div')
+	selectionsDisplay = document.getElementById('selectionsDisplay')
+	let box = document.createElement('div')
 	box.className = 'selection-box'
 	box.innerHTML = `${text} <span class="remove-box">X</span>`
 	selectionsDisplay.appendChild(box)
@@ -204,10 +206,10 @@ function addSelectionBox(text) {
 }
 
 function removeSelection(text, box) {
-	var index
+	let index
 
 	if (text.endsWith('%')) {
-		var value = parseInt(text)
+		let value = parseInt(text)
 		index = disabilities.indexOf(value)
 		if (index !== -1) disabilities.splice(index, 1)
 	} else {
@@ -220,7 +222,7 @@ function removeSelection(text, box) {
 }
 
 function updateTotalCompensation() {
-	var selectionsDisplay = document.getElementById('selectionsDisplay')
+	selectionsDisplay = document.getElementById('selectionsDisplay')
 	if (selectionsDisplay.childNodes.length === 0) {
 		combinedPercentage = 0
 		totalCompensation = 0
@@ -237,12 +239,6 @@ function updateTotalCompensation() {
 	combinedPercentage = Math.round(combinedPercentage / 10) * 10
 	console.log(combinedPercentage)
 
-	selectedOptions = []
-	document.querySelectorAll('.optional:checked').forEach(function (optional) {
-		selectedOptions.push(optional.id)
-	})
-	console.log(selectedOptions)
-
 	if (bilateralDisabilities.length > 1) {
 		var bilateralCombined =
 			bilateralDisabilities.reduce(function (acc, cur) {
@@ -256,14 +252,27 @@ function updateTotalCompensation() {
 	}
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
-	var compensation = document.getElementById('compensation')
+	compensation = document.getElementById('compensation')
 
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
 	console.log(totalCompensation)
 
 	// Default to single rate
-	var totalCompensation = compensationRates[combinedPercentage]['single']
+	totalCompensation = compensationRates[combinedPercentage]['single']
+
+	selectedOptions = []
+	document.querySelectorAll('.optional:checked').forEach(function (optional) {
+		if (optional.id !== 'none') {
+			selectedOptions.push(optional.id)
+		}
+		console.log(selectedOptions + 'first selected options')
+	})
+
+	totalCompensation =
+		compensationRates[combinedPercentage][selectedOptions.join('')]
+	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
 	// Watch dropdowns for changes
 	var childrenUnder18 = parseInt(
@@ -278,17 +287,24 @@ function updateTotalCompensation() {
 			totalCompensation =
 				compensationRates[combinedPercentage][selectedOptions.join('')]
 
+			console.log(selectedOptions + 'inside under 18')
 			console.log(totalCompensation + ' with one child')
 		}
 
-		if (childrenUnder18 > 1) {
-			var addChildUnder18 = childrenUnder18 - 1
+		if (childrenUnder18 > 1 && childrenOver18 === 0) {
+			let addChildUnder18 = childrenUnder18 - 1
 			console.log(addChildUnder18)
 			if (addChildUnder18 > 0) {
 				totalCompensation +=
 					addChildUnder18 *
 					compensationRates[combinedPercentage]['additionalChildUnder18']
+				console.log(totalCompensation + 'with addtnl Child')
 			}
+		} else if (childrenOver18 > 1 && childrenUnder18 > 0) {
+			totalCompensation +=
+				childrenUnder18 *
+				compensationRates[combinedPercentage]['additionalChildUnder18']
+			console.log(totalCompensation + 'with addtnl Child')
 		} else {
 			totalCompensation =
 				compensationRates[combinedPercentage][selectedOptions.join('')]
@@ -304,13 +320,17 @@ function updateTotalCompensation() {
 			selectedOptions.push('withOneChild')
 		}
 
-		if (childrenOver18 > 1) {
-			var addChildOver18 = childrenOver18 - 1
+		if (childrenOver18 > 1 && childrenUnder18 === 0) {
+			let addChildOver18 = childrenOver18 - 1
 			if (addChildOver18 > 0) {
 				totalCompensation +=
 					addChildOver18 *
 					compensationRates[combinedPercentage]['additionalChildOver18']
 			}
+		} else if (childrenUnder18 > 1 && childrenOver18 > 0) {
+			totalCompensation +=
+				childrenOver18 *
+				compensationRates[combinedPercentage]['additionalChildOver18']
 		} else {
 			totalCompensation = compensationRates[combinedPercentage]['withOneChild']
 		}
@@ -320,35 +340,21 @@ function updateTotalCompensation() {
 		)
 	}
 
-	const selectedOptionKey = selectedOptions.join('')
-	if (compensationRates[combinedPercentage][selectedOptionKey]) {
-		totalCompensation = compensationRates[combinedPercentage][selectedOptionKey]
-	}
-	console.log(totalCompensation)
+	console.log(selectedOptions + 'last options')
+
+	console.log(totalCompensation + 'total compensation')
 	// Update total compensation display
-	compensation = document.getElementById('compensation')
+
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
-
-	document
-		.getElementById('childrenUnder18')
-		.addEventListener('change', updateTotalCompensation)
-	document
-		.getElementById('childrenOver18')
-		.addEventListener('change', updateTotalCompensation)
-
-	// Adjust based on selected options
-	if (compensationRates[combinedPercentage][selectedOptions.join('')]) {
-		totalCompensation =
-			compensationRates[combinedPercentage][selectedOptions.join('')]
-	}
-
-	console.log(totalCompensation)
-
-	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-
-	resultSpan.innerHTML = combinedPercentage + '%'
 }
+
+document
+	.getElementById('childrenUnder18')
+	.addEventListener('change', updateTotalCompensation)
+document
+	.getElementById('childrenOver18')
+	.addEventListener('change', updateTotalCompensation)
 
 function clearTotals() {
 	document
