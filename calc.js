@@ -91,14 +91,14 @@ const compensationRates = {
 		withSpouse: 2161.01,
 		withSpousewithOneParent: 2294.01,
 		withSpousewithTwoParents: 2427.01,
-		withOneParent: 2128.01,
-		withTwoParents: 2261.01,
-		withOneChild: 2106.01,
+		singlewithOneParent: 2128.01,
+		singlewithTwoParents: 2261.01,
+		singleithOneChild: 2106.01,
 		withSpousewithOneChild: 2283.01,
 		withSpousewithOneParentwithOneChild: 2416.01,
 		withSpousewithTwoParentswithOneChild: 2549.01,
-		withOneParentwithOneChild: 2239.01,
-		withTwoParentswithOneChild: 2372.01,
+		singlewithOneParentwithOneChild: 2239.01,
+		singlewithTwoParentswithOneChild: 2372.01,
 		additionalChildUnder18: 82.0,
 		additionalChildOver18: 267.0,
 		aidAndAttendance: 153.0
@@ -108,14 +108,14 @@ const compensationRates = {
 		withSpouse: 2428.91,
 		withSpousewithOneParent: 2578.91,
 		withSpousewithTwoParents: 2728.91,
-		withOneParent: 2391.91,
-		withTwoParents: 2541.91,
-		withOneChild: 2366.91,
+		singlewithOneParent: 2391.91,
+		singlewithTwoParents: 2541.91,
+		singlewithOneChild: 2366.91,
 		withSpousewithOneChild: 2565.91,
 		withSpousewithOneParentwithOneChild: 2715.91,
 		withSpousewithTwoParentswithOneChild: 2865.91,
-		withOneParentwithOneChild: 2516.91,
-		withTwoParentswithOneChild: 2666.91,
+		singlewithOneParentwithOneChild: 2516.91,
+		singlewithTwoParentswithOneChild: 2666.91,
 		additionalChildUnder18: 93.0,
 		additionalChildOver18: 301.0,
 		aidAndAttendance: 172.0
@@ -125,14 +125,14 @@ const compensationRates = {
 		withSpouse: 3946.25,
 		withSpousewithOneParent: 4113.51,
 		withSpousewithTwoParents: 4280.77,
-		withOneParent: 3905.11,
-		withTwoParents: 4072.37,
-		withOneChild: 3877.22,
+		singlewithOneParent: 3905.11,
+		singlewithTwoParents: 4072.37,
+		singlewithOneChild: 3877.22,
 		withSpousewithOneChild: 4098.87,
 		withSpousewithoneParentwithOneChild: 4266.13,
 		withSpousewithTwoParentswithOneChild: 4433.39,
-		withOneParentwithOneChild: 4044.48,
-		withTwoParentswithOneChild: 4211.74,
+		singlewithOneParentwithOneChild: 4044.48,
+		singlewithTwoParentswithOneChild: 4211.74,
 		additionalChildUnder18: 1033.55,
 		additionalChildOver18: 334.49,
 		aidAndAttendance: 191.14
@@ -144,38 +144,71 @@ let disabilities = []
 let bilateralDisabilities = []
 let selectedOptions = []
 let selectionsDisplay
-let compensation = ''
+let compensation
 let totalCompensation = 0
 let combinedPercentage = 0
 let selectedBodyPart = null
 let resultSpan = document.getElementById('result')
+let selectionId = 0
+let selectionIds = []
+
+function roundToNearest10(value) {
+	return Math.round(value / 10) * 10
+}
 
 function calculateCompensation() {
 	document.querySelectorAll('.body-part').forEach(function (bodyPart) {
 		bodyPart.addEventListener('click', function () {
-			selectedBodyPart = bodyPart.textContent // Update the selected body part
+			selectedBodyPart = bodyPart.getAttribute('data-body-limb')
+			displayBodyPart = bodyPart.textContent
 		})
 	})
 
 	document.querySelectorAll('.percentage').forEach(function (button) {
 		button.addEventListener('click', function () {
 			let value = parseInt(button.value)
-			let selectionText = `${value}%`
+			let selectionText = ''
+			let id = selectionId++
 
 			if (selectedBodyPart) {
-				selectionText = `${selectedBodyPart} ${value}%`
+				selectionText = `${displayBodyPart} ${value}%`
+
+				// Add to the limb array
 				limb.push(selectedBodyPart)
+
+				// Check if there are already limbs with the same data-body-part
+				const matchingLimb = limb.filter((l) => l === selectedBodyPart)
+				console.log(matchingLimb + ' matching limbs')
+
+				// If there's more than one of the same body part, it's bilateral
+				if (matchingLimb.length > 1) {
+					bilateralDisabilities = bilateralDisabilities.concat(disabilities)
+					disabilities.length = 0
+					bilateralDisabilities.push(value)
+				} else if (bilateralDisabilities.length > 0) {
+					bilateralDisabilities.push(value)
+				} else {
+					disabilities.push(value)
+				}
+
+				// Reset the selected body part after it's used
 				selectedBodyPart = null
+				displayBodyPart = null
+			} else {
+				if (bilateralDisabilities.length > 1) {
+					selectionText = `${value}%`
+					bilateralDisabilities.push(value)
+				} else {
+					selectionText = `${value}%`
+					disabilities.push(value)
+				}
 			}
 
-			disabilities.push(value)
-			addSelectionBox(selectionText)
+			// Store the ID separately, associated with the value
+			selectionIds.push(id)
+			console.log(selectionIds + ' selection ids')
 
-			if (disabilities.length > 1 && limb.length > 1) {
-				disabilities.forEach(function (disability) {
-					bilateralDisabilities.push(disability)
-				})
-			}
+			addSelectionBox(selectionText, id)
 
 			button.classList.remove('selected')
 			updateTotalCompensation()
@@ -193,35 +226,9 @@ function calculateCompensation() {
 	updateTotalCompensation()
 }
 
-function addSelectionBox(text) {
-	selectionsDisplay = document.getElementById('selectionsDisplay')
-	let box = document.createElement('div')
-	box.className = 'selection-box'
-	box.innerHTML = `${text} <span class="remove-box">X</span>`
-	selectionsDisplay.appendChild(box)
-
-	box.querySelector('.remove-box').addEventListener('click', function () {
-		removeSelection(text, box)
-	})
-}
-
-function removeSelection(text, box) {
-	let index
-
-	if (text.endsWith('%')) {
-		let value = parseInt(text)
-		index = disabilities.indexOf(value)
-		if (index !== -1) disabilities.splice(index, 1)
-	} else {
-		index = limb.indexOf(text)
-		if (index !== -1) limb.splice(index, 1)
-	}
-
-	box.remove()
-	updateTotalCompensation()
-}
-
 function updateTotalCompensation() {
+	compensation = document.getElementById('compensation')
+
 	selectionsDisplay = document.getElementById('selectionsDisplay')
 	if (selectionsDisplay.childNodes.length === 0) {
 		combinedPercentage = 0
@@ -231,49 +238,56 @@ function updateTotalCompensation() {
 		return
 	}
 
-	combinedPercentage =
-		disabilities.reduce(function (acc, cur) {
-			return acc * (1 - cur / 100)
-		}, 1) * 100
-	combinedPercentage = 100 - combinedPercentage
-	combinedPercentage = Math.round(combinedPercentage / 10) * 10
-	console.log(combinedPercentage)
+	if (disabilities.length > 0) {
+		combinedPercentage =
+			disabilities.reduce(function (acc, cur) {
+				return acc * (1 - cur / 100)
+			}, 1) * 100
+		combinedPercentage = 100 - combinedPercentage
+		combinedPercentage = roundToNearest10(combinedPercentage)
 
-	if (bilateralDisabilities.length > 1) {
+		if (combinedPercentage >= 100) {
+			combinedPercentage = 100
+		}
+
+		totalCompensation = compensationRates[combinedPercentage]['single']
+		document.getElementById('result').innerHTML = combinedPercentage + '%'
+	}
+
+	if (bilateralDisabilities.length > 0) {
 		var bilateralCombined =
 			bilateralDisabilities.reduce(function (acc, cur) {
 				return acc * (1 - cur / 100)
 			}, 1) * 100
-		bilateralCombined = 100 - bilateralCombined
-		bilateralCombined = Math.round(bilateralCombined - 10)
+		bilateralCombined = 100 - bilateralCombined + 10
+		bilateralCombined = roundToNearest10(bilateralCombined)
 
-		combinedPercentage =
-			Math.round((combinedPercentage + bilateralCombined) / 20) * 10
-	}
-	document.getElementById('result').innerHTML = combinedPercentage + '%'
-
-	compensation = document.getElementById('compensation')
-
-	document.getElementById('result').innerHTML = combinedPercentage + '%'
-
-	console.log(totalCompensation)
-
-	// Default to single rate
-	totalCompensation = compensationRates[combinedPercentage]['single']
-
-	selectedOptions = []
-	document.querySelectorAll('.optional:checked').forEach(function (optional) {
-		if (optional.id !== 'none') {
-			selectedOptions.push(optional.id)
+		if (bilateralCombined >= 100) {
+			bilateralCombined = 100
 		}
-		console.log(selectedOptions + 'first selected options')
-	})
 
-	totalCompensation =
-		compensationRates[combinedPercentage][selectedOptions.join('')]
+		totalCompensation = compensationRates[bilateralCombined]['single']
+		combinedPercentage = bilateralCombined
+		document.getElementById('result').innerHTML = combinedPercentage + '%'
+	}
+
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
+	selectedOptions = []
+	if (selectedOptions.length > 0) {
+		document.querySelectorAll('.optional:checked').forEach(function (optional) {
+			if (optional.id !== 'none') {
+				selectedOptions.push(optional.id)
+			}
+		})
+
+		totalCompensation =
+			compensationRates[combinedPercentage][selectedOptions.join('')]
+		compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+		document.getElementById('result').innerHTML = combinedPercentage + '%'
+		console.log(combinedPercentage + ' combined percentage after bilateral')
+	}
 	// Watch dropdowns for changes
 	var childrenUnder18 = parseInt(
 		document.getElementById('childrenUnder18').value
@@ -286,8 +300,7 @@ function updateTotalCompensation() {
 			selectedOptions.push('withOneChild')
 			totalCompensation =
 				compensationRates[combinedPercentage][selectedOptions.join('')]
-
-			console.log(selectedOptions + 'inside under 18')
+			console.log(selectedOptions + ' inside under 18')
 			console.log(totalCompensation + ' with one child')
 		}
 
@@ -298,13 +311,13 @@ function updateTotalCompensation() {
 				totalCompensation +=
 					addChildUnder18 *
 					compensationRates[combinedPercentage]['additionalChildUnder18']
-				console.log(totalCompensation + 'with addtnl Child')
+				console.log(totalCompensation + ' with addtnl Child')
 			}
 		} else if (childrenOver18 > 1 && childrenUnder18 > 0) {
 			totalCompensation +=
 				childrenUnder18 *
 				compensationRates[combinedPercentage]['additionalChildUnder18']
-			console.log(totalCompensation + 'with addtnl Child')
+			console.log(totalCompensation + ' with addtnl Child')
 		} else {
 			totalCompensation =
 				compensationRates[combinedPercentage][selectedOptions.join('')]
@@ -340,11 +353,7 @@ function updateTotalCompensation() {
 		)
 	}
 
-	console.log(selectedOptions + 'last options')
-
-	console.log(totalCompensation + 'total compensation')
 	// Update total compensation display
-
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 }
@@ -355,6 +364,51 @@ document
 document
 	.getElementById('childrenOver18')
 	.addEventListener('change', updateTotalCompensation)
+
+function addSelectionBox(text, id) {
+	selectionsDisplay = document.getElementById('selectionsDisplay')
+	let box = document.createElement('div')
+	box.className = 'selection-box'
+	box.innerHTML = `${text} <span class="remove-box">X</span>`
+	selectionsDisplay.appendChild(box)
+
+	box.querySelector('.remove-box').addEventListener('click', function () {
+		removeSelection(id, box) // Pass only the id, not the text.
+	})
+}
+
+function removeSelection(id, box) {
+	// Remove from disabilities
+	let index = selectionIds.findIndex((item) => item === id)
+	if (index !== -1) {
+		// Find the corresponding value to remove from the array using the id
+		let value = disabilities[index] || bilateralDisabilities[index]
+
+		// Remove the value from the respective arrays
+		if (disabilities.includes(value)) {
+			disabilities.splice(index, 1)
+		} else if (bilateralDisabilities.includes(value)) {
+			bilateralDisabilities.splice(index, 1)
+		}
+
+		// Remove from limb and selectionIds arrays
+		limb.splice(index, 1)
+		selectionIds.splice(index, 1)
+	}
+
+	// Update the bilateral check
+	const matchingLimb = limb.filter((l) => l === selectedBodyPart)
+	if (matchingLimb.length < 2 && bilateralDisabilities.length > 0) {
+		disabilities = disabilities.concat(bilateralDisabilities)
+		bilateralDisabilities = []
+	}
+
+	// Remove the selection box
+	box.remove()
+
+	// Recalculate compensation
+	updateTotalCompensation()
+}
 
 function clearTotals() {
 	document
@@ -374,6 +428,7 @@ function clearTotals() {
 	selectedOptions = []
 	totalCompensation = 0
 	combinedPercentage = 0
+	selectionIds = []
 
 	var selectionsDisplay = document.getElementById('selectionsDisplay')
 	selectionsDisplay.innerHTML = ''
@@ -381,8 +436,6 @@ function clearTotals() {
 	compensation = document.getElementById('compensation')
 	compensation.innerHTML = '$' + 0.0
 	document.getElementById('result').innerHTML = 0 + '%'
-
-	updateTotalCompensation()
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -413,7 +466,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
 		checkbox.addEventListener('change', handleCheckboxChange)
 	})
 })
-
-
 
 calculateCompensation()
