@@ -228,23 +228,28 @@ function calculateCompensation() {
 
 function updateTotalCompensation() {
 	compensation = document.getElementById('compensation')
-
 	selectionsDisplay = document.getElementById('selectionsDisplay')
+	const totalDiv = document.getElementById('realPercentage')
+
 	if (selectionsDisplay.childNodes.length === 0) {
 		combinedPercentage = 0
 		totalCompensation = 0
 		document.getElementById('result').innerHTML = '0%'
 		document.getElementById('compensation').innerHTML = '$0.00'
+		totalDiv.innerHTML = ''
 		return
 	}
 
+	let realPercentage = 0
 	if (disabilities.length > 0) {
-		combinedPercentage =
+		realPercentage =
+			100 -
 			disabilities.reduce(function (acc, cur) {
 				return acc * (1 - cur / 100)
-			}, 1) * 100
-		combinedPercentage = 100 - combinedPercentage
-		combinedPercentage = roundToNearest10(combinedPercentage)
+			}, 1) *
+				100
+
+		combinedPercentage = roundToNearest10(realPercentage)
 
 		if (combinedPercentage >= 100) {
 			combinedPercentage = 100
@@ -255,11 +260,15 @@ function updateTotalCompensation() {
 	}
 
 	if (bilateralDisabilities.length > 0) {
-		var bilateralCombined =
+		let bilateralCombined =
+			100 -
 			bilateralDisabilities.reduce(function (acc, cur) {
 				return acc * (1 - cur / 100)
-			}, 1) * 100
-		bilateralCombined = 100 - bilateralCombined + 10
+			}, 1) *
+				100 +
+			10
+
+		realPercentage = bilateralCombined // Update the real percentage
 		bilateralCombined = roundToNearest10(bilateralCombined)
 
 		if (bilateralCombined >= 100) {
@@ -274,50 +283,45 @@ function updateTotalCompensation() {
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
+	// Handle options and update compensation
 	selectedOptions = []
-	if (selectedOptions.length > 0) {
-		document.querySelectorAll('.optional:checked').forEach(function (optional) {
-			if (optional.id !== 'none') {
-				selectedOptions.push(optional.id)
-			}
-		})
+	document.querySelectorAll('.optional:checked').forEach(function (optional) {
+		if (optional.id !== 'none') {
+			selectedOptions.push(optional.id)
+		}
+	})
 
-		totalCompensation =
-			compensationRates[combinedPercentage][selectedOptions.join('')]
-		compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-		document.getElementById('result').innerHTML = combinedPercentage + '%'
-		console.log(combinedPercentage + ' combined percentage after bilateral')
-	}
-	// Watch dropdowns for changes
+	totalCompensation =
+		compensationRates[combinedPercentage][selectedOptions.join('')] ||
+		totalCompensation
+	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+	document.getElementById('result').innerHTML = combinedPercentage + '%'
+
+	// Handle children and other dependents
 	var childrenUnder18 = parseInt(
 		document.getElementById('childrenUnder18').value
 	)
 	var childrenOver18 = parseInt(document.getElementById('childrenOver18').value)
 
-	// Update selectedOptions array
 	if (childrenUnder18 > 0) {
 		if (!selectedOptions.includes('withOneChild')) {
 			selectedOptions.push('withOneChild')
 			totalCompensation =
 				compensationRates[combinedPercentage][selectedOptions.join('')]
-			console.log(selectedOptions + ' inside under 18')
-			console.log(totalCompensation + ' with one child')
 		}
 
 		if (childrenUnder18 > 1 && childrenOver18 === 0) {
 			let addChildUnder18 = childrenUnder18 - 1
-			console.log(addChildUnder18)
+
 			if (addChildUnder18 > 0) {
 				totalCompensation +=
 					addChildUnder18 *
 					compensationRates[combinedPercentage]['additionalChildUnder18']
-				console.log(totalCompensation + ' with addtnl Child')
 			}
 		} else if (childrenOver18 > 1 && childrenUnder18 > 0) {
 			totalCompensation +=
 				childrenUnder18 *
 				compensationRates[combinedPercentage]['additionalChildUnder18']
-			console.log(totalCompensation + ' with addtnl Child')
 		} else {
 			totalCompensation =
 				compensationRates[combinedPercentage][selectedOptions.join('')]
@@ -328,34 +332,24 @@ function updateTotalCompensation() {
 		)
 	}
 
-	if (childrenOver18 > 0) {
-		if (!selectedOptions.includes('withOneChild')) {
-			selectedOptions.push('withOneChild')
-		}
+	realPercentage = Math.min(realPercentage, 100)
 
-		if (childrenOver18 > 1 && childrenUnder18 === 0) {
-			let addChildOver18 = childrenOver18 - 1
-			if (addChildOver18 > 0) {
-				totalCompensation +=
-					addChildOver18 *
-					compensationRates[combinedPercentage]['additionalChildOver18']
-			}
-		} else if (childrenUnder18 > 1 && childrenOver18 > 0) {
-			totalCompensation +=
-				childrenOver18 *
-				compensationRates[combinedPercentage]['additionalChildOver18']
-		} else {
-			totalCompensation = compensationRates[combinedPercentage]['withOneChild']
-		}
-	} else {
-		selectedOptions = selectedOptions.filter(
-			(option) => option !== 'withOneChild'
-		)
+	let roundingMessage = ''
+	const tolerance = 0.05
+
+	if (
+		Math.abs(realPercentage - 100) > tolerance &&
+		realPercentage !== combinedPercentage
+	) {
+		const roundedDirection = combinedPercentage > realPercentage ? 'up' : 'down'
+		roundingMessage = `Your calculated rating is <strong>${realPercentage.toFixed(
+			1
+		)}%</strong> which the VA rounds ${roundedDirection} to <strong>${combinedPercentage}%.</strong>`
 	}
+	document.getElementById('realPercentage').innerHTML = roundingMessage
 
-	// Update total compensation display
+	// Finally, update the displayed compensation
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-	document.getElementById('result').innerHTML = combinedPercentage + '%'
 }
 
 document
@@ -373,7 +367,7 @@ function addSelectionBox(text, id) {
 	selectionsDisplay.appendChild(box)
 
 	box.querySelector('.remove-box').addEventListener('click', function () {
-		removeSelection(id, box) // Pass only the id, not the text.
+		removeSelection(id, box)
 	})
 }
 
