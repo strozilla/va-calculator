@@ -17,16 +17,16 @@
 
 <div class="body-part-sec">
     <div class="top-left">
-        <button class="body-part arm" type="button" value="Left Arm" data-body-limb="arm">Left Arm</button>
+        <button class="body-part arm" type="button" value="Left Arm" data-body-limb="left-arm">Left Arm</button>
     </div>
     <div class="top-right">
-        <button class="body-part arm" type="button" value="Right Arm" data-body-limb="arm">Right Arm</button>
+        <button class="body-part arm" type="button" value="Right Arm" data-body-limb="right-arm">Right Arm</button>
     </div>
     <div class="bottom-left">
-        <button class="body-part leg" type="button" value="Left Leg" data-body-limb="leg">Left Leg</button>
+        <button class="body-part leg" type="button" value="Left Leg" data-body-limb="left-leg">Left Leg</button>
     </div>
     <div class="bottom-right">
-        <button class="body-part leg" type="button" value="Right Leg" data-body-limb="leg">Right Leg</button>
+        <button class="body-part leg" type="button" value="Right Leg" data-body-limb="right-leg">Right Leg</button>
     </div>
 </div>
 
@@ -101,6 +101,7 @@
             <div class="totals">Combined Disability: <span id="result">0%</span></div>
             <div class="totals">Estimated Monthly Compensation: <span id="compensation">$0.00</span></div>
         </div>
+        <div id="bilateralMessage"></div>
         <div id="realPercentage"></div>
     </div>
     <button id="clearSelections" class="clear-btn" onclick="clearTotals()">Clear Selections</button>
