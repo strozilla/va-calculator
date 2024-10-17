@@ -154,6 +154,12 @@ let selectionIds = []
 let roundingMessage = ''
 let bilateralMessage = ''
 let bilateralFactor
+let hasBilateralArms
+let hasBilateralLegs
+let valueValues = []
+let bilateralValueValues = []
+let matchingLegs
+let matchingArms
 
 function roundToNearest10(value) {
 	return Math.round(value / 10) * 10
@@ -179,49 +185,39 @@ function calculateCompensation() {
 				// Add to the limb array
 				limb.push(selectedBodyPart)
 
+				bilateralDisabilities.push({ value, id })
+				disabilities.push({ value, id })
+
 				// Check if there's both a left and right limb selected for either arm or leg
-				const matchingArms = limb.filter(
-					(l) => l === 'left-arm' || l === 'right-arm'
-				)
-				const matchingLegs = limb.filter(
-					(l) => l === 'left-leg' || l === 'right-leg'
-				)
+				matchingArms = limb.filter((l) => l === 'left-arm' || l === 'right-arm')
+				matchingLegs = limb.filter((l) => l === 'left-leg' || l === 'right-leg')
 
 				// Check if we have both limbs for arms or legs
-				const hasBilateralArms =
+				hasBilateralArms =
 					matchingArms.includes('left-arm') &&
 					matchingArms.includes('right-arm')
-				const hasBilateralLegs =
+				hasBilateralLegs =
 					matchingLegs.includes('left-leg') &&
 					matchingLegs.includes('right-leg')
-
-				// Only proceed with bilateral calculation if there is both a left and right limb selected
-				if (hasBilateralArms || hasBilateralLegs) {
-					bilateralDisabilities = bilateralDisabilities.concat(disabilities)
-					disabilities.length = 0
-					bilateralDisabilities.push(value)
-				} else if (bilateralDisabilities.length > 0) {
-					bilateralDisabilities.push(value)
-				} else {
-					disabilities.push(value)
-				}
 
 				// Reset the selected body part after it's used
 				selectedBodyPart = null
 				displayBodyPart = null
 			} else {
-				if (bilateralDisabilities.length > 1) {
-					selectionText = `${value}%`
-					bilateralDisabilities.push(value)
-				} else {
-					selectionText = `${value}%`
-					disabilities.push(value)
-				}
+				selectionText = `${value}%`
+				disabilities.push({ value, id })
 			}
+
+			console.log(
+				bilateralDisabilities.map((disability) => disability.value) +
+					'bilateral Disabilities'
+			)
+			console.log(
+				disabilities.map((disability) => disability.value) + 'disabilities'
+			)
 
 			// Store the ID separately, associated with the value
 			selectionIds.push(id)
-			console.log(selectionIds + ' selection ids')
 
 			addSelectionBox(selectionText, id)
 
@@ -235,17 +231,14 @@ function calculateCompensation() {
 			updateTotalCompensation()
 		})
 	})
-	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
-	resultSpan.innerHTML = combinedPercentage + '%'
-
-	updateTotalCompensation()
 }
 
 function updateTotalCompensation() {
-	compensation = document.getElementById('compensation')
-	selectionsDisplay = document.getElementById('selectionsDisplay')
+	const compensation = document.getElementById('compensation')
+	const selectionsDisplay = document.getElementById('selectionsDisplay')
 	const totalDiv = document.getElementById('realPercentage')
 
+	// Check if there are no selections
 	if (selectionsDisplay.childNodes.length === 0) {
 		combinedPercentage = 0
 		totalCompensation = 0
@@ -256,14 +249,17 @@ function updateTotalCompensation() {
 	}
 
 	let realPercentage = 0
-	if (disabilities.length > 0) {
-		realPercentage =
-			100 -
-			disabilities.reduce(function (acc, cur) {
-				return acc * (1 - cur / 100)
-			}, 1) *
-				100
 
+	// Calculate the total percentage for disabilities (non-bilateral)
+	if (disabilities.length > 0) {
+		// Extract value properties from the disabilities array
+		valueValues = disabilities
+			.map((disability) => disability.value)
+			.sort((a, b) => b - a)
+		realPercentage = valueValues.reduce((acc, cur) => {
+			return Math.round(acc * (1 - cur / 100) * 100) / 100
+		}, 1)
+		realPercentage = 100 - realPercentage * 100
 		combinedPercentage = roundToNearest10(realPercentage)
 
 		if (combinedPercentage >= 100) {
@@ -274,36 +270,106 @@ function updateTotalCompensation() {
 		document.getElementById('result').innerHTML = combinedPercentage + '%'
 	}
 
-	if (bilateralDisabilities.length > 0) {
-		let bilateralCalculation =
-			100 -
-			bilateralDisabilities.reduce(function (acc, cur) {
-				return acc * (1 - cur / 100)
-			}, 1) *
-				100
+	// Calculate the total percentage for bilateralDisabilities if applicable
+	if (hasBilateralArms || hasBilateralLegs) {
+		// Remove existing bilateralCalculation from disabilities
+		disabilities = disabilities.filter(
+			(disability) => disability.id !== 'bilateral-adjusted'
+		)
 
-		bilateralFactor = parseFloat((bilateralCalculation * 0.1).toFixed(1))
-		let bilateralCombined = bilateralCalculation + bilateralFactor
+		// Remove bilateral percentages from disabilities
+		bilateralDisabilities.forEach((bilateral) => {
+			disabilities = disabilities.filter(
+				(disability) => disability.id !== bilateral.id
+			)
+		})
 
-		console.log(bilateralFactor)
+		// Recalculate valueValues after updating disabilities
+		let valueValues = disabilities
+			.map((disability) => disability.value)
+			.sort((a, b) => b - a)
 
-		realPercentage = bilateralCombined // Update the real percentage
-		bilateralCombined = roundToNearest10(bilateralCombined)
+		// Calculate the non-bilateral realPercentage after removing bilateral disabilities
+		if (valueValues.length > 0) {
+			realPercentage = valueValues.reduce((acc, cur) => {
+				return (acc * (1 - cur / 100) * 100) / 100
+			}, 1)
+			realPercentage = 100 - realPercentage * 100
+		} else {
+			realPercentage = 0 // If all disabilities are removed, set realPercentage to 0
+		}
+		console.log(realPercentage + ' realPercentage bilateral removed')
 
-		if (bilateralCombined >= 100) {
-			bilateralCombined = 100
+		// Extract value properties from the bilateralDisabilities array
+		let bilateralValueValues = bilateralDisabilities
+			.map((disability) => disability.value)
+			.sort((a, b) => b - a)
+
+		// Recalculate bilateralCalculation after updating bilateralDisabilities
+		let bilateralCalculation = bilateralValueValues.reduce((acc, cur) => {
+			return (acc * (1 - cur / 100) * 100) / 100
+		}, 1)
+		bilateralCalculation = 100 - Math.round(bilateralCalculation * 100)
+
+		// Apply 10% bilateral factor
+		let bilateralFactor = parseFloat((bilateralCalculation * 0.1).toFixed(1))
+
+		// Create the new adjusted bilateral factor
+		let adjustedBilateralFactor = {
+			id: 'bilateral-adjusted',
+			value: bilateralCalculation + bilateralFactor
 		}
 
-		totalCompensation = compensationRates[bilateralCombined]['single']
-		combinedPercentage = bilateralCombined
+		// Add the new adjusted bilateral factor to the disabilities array
+		disabilities.push(adjustedBilateralFactor)
+
+		// Recalculate combined values including the adjusted factor
+		let combinedValues = disabilities
+			.map((disability) => disability.value)
+			.sort((a, b) => b - a)
+		realPercentage = combinedValues.reduce((acc, cur) => {
+			return (acc * (1 - cur / 100) * 100) / 100
+		}, 1)
+		realPercentage = 100 - Math.round(realPercentage * 100)
+
+		// Adjust for combined percentage
+		combinedPercentage = roundToNearest10(realPercentage)
+		if (combinedPercentage >= 100) {
+			combinedPercentage = 100
+		}
+
+		console.log(
+			bilateralDisabilities.map((disability) => disability.value) +
+				'bilateral Disabilities after push'
+		)
+		console.log(
+			disabilities.map((disability) => disability.value) +
+				'disabilities after push'
+		)
+
+		// Bilateral message
+		let bilateralMessage = ''
+		if (hasBilateralArms || hasBilateralLegs) {
+			bilateralMessage = `* A bilateral factor of <strong>${bilateralFactor}%</strong> has been applied.`
+		}
+
+		document.getElementById('bilateralMessage').innerHTML = bilateralMessage
+
+		totalCompensation = compensationRates[combinedPercentage]['single']
 		document.getElementById('result').innerHTML = combinedPercentage + '%'
+	}
+
+	// Reset bilateral factor if no bilateral limbs remain
+	if (bilateralDisabilities.length === 1) {
+		bilateralFactor = 0
+		document.getElementById('bilateralMessage').innerHTML = ''
 	}
 
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
-	// Handle options and update compensation
-	selectedOptions = []
+	// Handle optional selections for compensation
+	let selectedOptions = []
 	document.querySelectorAll('.optional:checked').forEach(function (optional) {
 		if (optional.id !== 'none') {
 			selectedOptions.push(optional.id)
@@ -316,11 +382,11 @@ function updateTotalCompensation() {
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 
-	// Handle children and other dependents
-	var childrenUnder18 = parseInt(
-		document.getElementById('childrenUnder18').value
-	)
-	var childrenOver18 = parseInt(document.getElementById('childrenOver18').value)
+	// Handle children and dependents
+	const childrenUnder18 =
+		parseInt(document.getElementById('childrenUnder18').value) || 0
+	const childrenOver18 =
+		parseInt(document.getElementById('childrenOver18').value) || 0
 
 	if (childrenUnder18 > 0) {
 		if (!selectedOptions.includes('withOneChild')) {
@@ -330,7 +396,7 @@ function updateTotalCompensation() {
 		}
 
 		if (childrenUnder18 > 1 && childrenOver18 === 0) {
-			let addChildUnder18 = childrenUnder18 - 1
+			const addChildUnder18 = childrenUnder18 - 1
 
 			if (addChildUnder18 > 0) {
 				totalCompensation +=
@@ -352,32 +418,23 @@ function updateTotalCompensation() {
 	}
 
 	realPercentage = Math.min(realPercentage, 100)
-
 	const tolerance = 0.05
 
+	// Handle rounding messages
+	let roundingMessage = ''
 	if (
 		Math.abs(realPercentage - 100) > tolerance &&
 		realPercentage !== combinedPercentage
 	) {
 		const roundedDirection = combinedPercentage > realPercentage ? 'up' : 'down'
 		roundingMessage = `Your calculated rating is <strong>${realPercentage.toFixed(
-			1
+			0
 		)}%</strong> which the VA rounds ${roundedDirection} to <strong>${combinedPercentage}%.</strong>`
 	}
-	document.getElementById('realPercentage').innerHTML = roundingMessage
 
-	// Bilateral message
+	totalDiv.innerHTML = roundingMessage
 
-	if (bilateralDisabilities.length > 0) {
-		bilateralMessage = `* A bilateral factor of <strong>${bilateralFactor}%</strong> has been applied.`
-	} else {
-		bilateralMessage = ''
-	}
-
-	// Update the #bilateralMessage div
-	document.getElementById('bilateralMessage').innerHTML = bilateralMessage
-
-	// Finally, update the displayed compensation
+	// Update displayed compensation
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 }
 
@@ -401,35 +458,19 @@ function addSelectionBox(text, id) {
 }
 
 function removeSelection(id, box) {
-	// Remove from disabilities
-	let index = selectionIds.findIndex((item) => item === id)
+	// Remove from disabilities using the ID
+	disabilities = disabilities.filter((disability) => disability.id !== id)
+	bilateralDisabilities = bilateralDisabilities.filter((b) => b.id !== id)
+
+	// Remove from limb and selectionIds arrays
+	let index = limb.findIndex((l) => l.id === id)
 	if (index !== -1) {
-		// Find the corresponding value to remove from the array using the id
-		let value = disabilities[index] || bilateralDisabilities[index]
-
-		// Remove the value from the respective arrays
-		if (disabilities.includes(value)) {
-			disabilities.splice(index, 1)
-		} else if (bilateralDisabilities.includes(value)) {
-			bilateralDisabilities.splice(index, 1)
-		}
-
-		// Remove from limb and selectionIds arrays
 		limb.splice(index, 1)
-		selectionIds.splice(index, 1)
-	}
-
-	// Update the bilateral check
-	const matchingLimb = limb.filter((l) => l === selectedBodyPart)
-	if (matchingLimb.length < 2 && bilateralDisabilities.length > 0) {
-		disabilities = disabilities.concat(bilateralDisabilities)
-		bilateralDisabilities = []
 	}
 
 	// Remove the selection box
 	box.remove()
 
-	// Recalculate compensation
 	updateTotalCompensation()
 }
 
@@ -449,11 +490,25 @@ function clearTotals() {
 	disabilities = []
 	bilateralDisabilities = []
 	selectedOptions = []
+	selectionsDisplay
+	compensation
 	totalCompensation = 0
 	combinedPercentage = 0
+	selectedBodyPart = null
+	resultSpan = document.getElementById('result')
+	selectionId = 0
 	selectionIds = []
-	document.getElementById('realPercentage').style.display = 'none'
-	document.getElementById('bilateralMessage').style.display = 'none'
+	roundingMessage = ''
+	bilateralMessage = ''
+	bilateralFactor
+	hasBilateralArms
+	hasBilateralLegs
+	valueValues = []
+	bilateralValueValues = []
+	matchingLegs
+	matchingArms
+	document.getElementById('realPercentage').innerHTML = ''
+	document.getElementById('bilateralMessage').innerHTML = ''
 
 	var selectionsDisplay = document.getElementById('selectionsDisplay')
 	selectionsDisplay.innerHTML = ''
