@@ -184,7 +184,6 @@ function calculateCompensation() {
 
 				limb.push(selectedBodyPart)
 
-				// Add to disabilities and check for bilateral pairing
 				disabilities.push({ value, id, limb: selectedBodyPart })
 
 				// Check and push bilateral pairs
@@ -230,16 +229,16 @@ function pushBilateralPair(selectedBodyPart, value, id, limbType) {
 	)
 
 	if (oppositeEntryIndex !== -1) {
-		// Add both limbs to the bilateral array
+		// Add both limbs to bilateral array
 		bilateralDisabilities.push({ value, id, limb: selectedBodyPart })
 		bilateralDisabilities.push(disabilities[oppositeEntryIndex])
 
-		// Remove both limbs from the disabilities array
+		// Remove both limbs from disabilities array
 		disabilities = disabilities.filter(
 			(d) => d.id !== id && d.id !== disabilities[oppositeEntryIndex].id
 		)
 
-		// Set bilateral flags for proper calculation
+		// Set bilateral
 		if (limbType === 'arm') {
 			hasBilateralArms = true
 		} else if (limbType === 'leg') {
@@ -267,9 +266,8 @@ function updateTotalCompensation() {
 	let bilateralCombinedPercentage = 0
 	let finalBilateralValue = 0
 
-	// Step 1: Handle bilateral disabilities and calculate the adjusted bilateral value
+	// Handle bilateral disabilities and calculate adjusted bilateral value
 	if (hasBilateralArms || hasBilateralLegs) {
-		// Get bilateral disabilities (e.g., left-arm and right-arm)
 		const bilateralValues = bilateralDisabilities
 			.map((disability) => disability.value)
 			.sort((a, b) => b - a)
@@ -281,7 +279,7 @@ function updateTotalCompensation() {
 
 		bilateralCombinedPercentage = 100 - bilateralCombined * 100
 
-		// Apply the 10% bilateral factor
+		// Apply bilateral factor
 		let bilateralFactor = parseFloat(
 			(bilateralCombinedPercentage * 0.1).toFixed(1)
 		)
@@ -291,11 +289,10 @@ function updateTotalCompensation() {
 			'bilateralMessage'
 		).innerHTML = `* A bilateral factor of <strong>${bilateralFactor}%</strong> has been applied.`
 
-		// Push the final bilateral result into the array for combination
 		finalCombinedValues.push(finalBilateralValue)
 	}
 
-	// Step 2: Handle non-bilateral disabilities
+	// Handle non-bilateral disabilities
 	if (disabilities.length > 0) {
 		const nonBilateralValues = disabilities
 			.map((disability) => disability.value)
@@ -304,19 +301,17 @@ function updateTotalCompensation() {
 		finalCombinedValues = finalCombinedValues.concat(nonBilateralValues)
 	}
 
-	// Step 3: Calculate the total combined percentage using the VA formula
+	// Calculate total combined percentage
 	let combinedFinalPercentage = finalCombinedValues.reduce((acc, cur) => {
 		return Math.round(acc * (1 - cur / 100) * 100) / 100
 	}, 1)
 	combinedFinalPercentage = 100 - combinedFinalPercentage * 100
 
-	// Round the final combined percentage
 	combinedPercentage = roundToNearest10(combinedFinalPercentage)
 	if (combinedPercentage >= 100) {
 		combinedPercentage = 100
 	}
 
-	// Fix the rounding message to display the correct combined percentage
 	let roundingMessage = ''
 	if (Math.abs(combinedFinalPercentage - combinedPercentage) > 0.05) {
 		let roundedDirection =
@@ -332,7 +327,7 @@ function updateTotalCompensation() {
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 
-	// Handle optional selections for compensation
+	// Handle optional selections
 	selectedOptions = []
 	document.querySelectorAll('.optional:checked').forEach(function (optional) {
 		if (optional.id !== 'none') {
@@ -381,13 +376,11 @@ function updateTotalCompensation() {
 		)
 	}
 
-	// Reset bilateral factor and message if no bilateral pairs remain
 	if (!hasBilateralArms && !hasBilateralLegs) {
 		bilateralFactor = 0
-		document.getElementById('bilateralMessage').innerHTML = '' // Clear the message
+		document.getElementById('bilateralMessage').innerHTML = ''
 	}
 
-	// Update displayed compensation
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 }
 
@@ -414,14 +407,12 @@ function addToBilateralDisabilities(selectedBodyPart, value, id) {
 	if (selectedBodyPart === 'left-arm' || selectedBodyPart === 'right-arm') {
 		let oppositeArm = selectedBodyPart === 'left-arm' ? 'right-arm' : 'left-arm'
 		if (limb.includes(oppositeArm)) {
-			// Add both limbs to the bilateral array if not already added
 			if (
 				!bilateralDisabilities.some(
 					(d) => d.limb === selectedBodyPart || d.limb === oppositeArm
 				)
 			) {
 				bilateralDisabilities.push({ value, id, limb: selectedBodyPart })
-				// Find and push the opposite limb percentage
 				let oppositeIndex = limb.findIndex((l) => l === oppositeArm)
 				bilateralDisabilities.push({
 					value: disabilities[oppositeIndex].value,
@@ -435,14 +426,12 @@ function addToBilateralDisabilities(selectedBodyPart, value, id) {
 	if (selectedBodyPart === 'left-leg' || selectedBodyPart === 'right-leg') {
 		let oppositeLeg = selectedBodyPart === 'left-leg' ? 'right-leg' : 'left-leg'
 		if (limb.includes(oppositeLeg)) {
-			// Add both limbs to the bilateral array if not already added
 			if (
 				!bilateralDisabilities.some(
 					(d) => d.limb === selectedBodyPart || d.limb === oppositeLeg
 				)
 			) {
 				bilateralDisabilities.push({ value, id, limb: selectedBodyPart })
-				// Find and push the opposite limb percentage
 				let oppositeIndex = limb.findIndex((l) => l === oppositeLeg)
 				bilateralDisabilities.push({
 					value: disabilities[oppositeIndex].value,
@@ -460,18 +449,17 @@ function removeSelection(id, box) {
 		disabilities.find((d) => d.id === id) ||
 		bilateralDisabilities.find((d) => d.id === id)
 
-	// Remove it from its respective array
+	// Remove from correct array
 	disabilities = disabilities.filter((d) => d.id !== id)
 	bilateralDisabilities = bilateralDisabilities.filter((d) => d.id !== id)
 
-	// Check for broken bilateral pair
 	if (removedDisability) {
 		let limbType = removedDisability.limb?.includes('arm') ? 'arm' : 'leg'
 		let oppositeLimb = removedDisability.limb?.includes('left')
 			? removedDisability.limb.replace('left', 'right')
 			: removedDisability.limb.replace('right', 'left')
 
-		// If the opposite limb is still in bilateralDisabilities, reassign it to disabilities
+		// If opposite limb still in bilateralDisabilities, reassign it to disabilities
 		let oppositeEntry = bilateralDisabilities.find(
 			(d) => d.limb === oppositeLimb
 		)
