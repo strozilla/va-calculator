@@ -1,141 +1,141 @@
 const compensationRates = {
-	10: { single: 171.23 },
-	20: { single: 338.49 },
+	10: { single: 175.51 },
+	20: { single: 346.95 },
 	30: {
-		single: 524.31,
-		withSpouse: 586.31,
-		withSpousewithoneParent: 636.31,
-		withSpousewithTwoParents: 686.31,
-		singlewithOneParent: 574.31,
-		singlewithTwoParents: 624.331,
-		singlewithOneChild: 565.31,
-		withSpousewithOneChild: 632.21,
-		withSpousewithOneParentwithOneChild: 682.31,
-		withSpousewithTwoParentswithOneChild: 732.31,
-		singlewithOneParentwithOneChild: 615.31,
-		sinlgewithTwoParentswithOneChild: 665.31,
+		single: 537.42,
+		withSpouse: 601.42,
+		withSpousewithoneParent: 652.42,
+		withSpousewithTwoParents: 703.42,
+		singlewithOneParent: 588.42,
+		singlewithTwoParents: 639.42,
+		singlewithOneChild: 579.42,
+		withSpousewithOneChild: 648.42,
+		withSpousewithOneParentwithOneChild: 699.42,
+		withSpousewithTwoParentswithOneChild: 750.42,
+		singlewithOneParentwithOneChild: 630.42,
+		sinlgewithTwoParentswithOneChild: 681.42,
 		additionalChildUnder18: 31.0,
-		additionalChildOver18: 100.0,
-		aidAndAttendance: 57.0
+		additionalChildOver18: 102.0,
+		aidAndAttendance: 58.0
 	},
 	40: {
-		single: 755.28,
-		withSpouse: 838.28,
-		withSpousewithOneParent: 904.28,
-		withSpousewithTwoParents: 970.28,
-		withOneParent: 821.28,
-		withTwoParents: 887.28,
-		withOneChild: 810.28,
-		withSpousewithOneChild: 899.28,
-		withSpousewithOneParentwithOneChild: 965.28,
-		withSpousewithTwoParentswithOneChild: 1031.28,
-		withOneParentwithOneChild: 876.28,
-		withTwoParentswithOneChild: 942.28,
-		additionalChildUnder18: 41.0,
-		additionalChildOver18: 133.0,
-		aidAndAttendance: 76.0
+		single: 774.16,
+		withSpouse: 859.16,
+		withSpousewithOneParent: 927.16,
+		withSpousewithTwoParents: 995.16,
+		withOneParent: 842.16,
+		withTwoParents: 910.16,
+		withOneChild: 831.16,
+		withSpousewithOneChild: 922.16,
+		withSpousewithOneParentwithOneChild: 990.16,
+		withSpousewithTwoParentswithOneChild: 1058.16,
+		withOneParentwithOneChild: 899.16,
+		withTwoParentswithOneChild: 967.16,
+		additionalChildUnder18: 42.0,
+		additionalChildOver18: 137.0,
+		aidAndAttendance: 78.0
 	},
 	50: {
-		single: 1075.16,
-		withSpouse: 1179.16,
-		withSpousewithOneParent: 1262.16,
-		withSpousewithTwoParents: 1345.16,
-		withOneParent: 1158.16,
-		withTwoParents: 1144.16,
-		withOneChild: 1241.16,
-		withSpousewithOneChild: 1255.16,
-		withSpousewithOneParentwithOneChild: 1338.16,
-		withSpousewithTwoParentswithOneChild: 1421.16,
-		withOneParentwithOneChild: 1227.16,
-		withTwoParentswithOneChild: 1310.16,
-		additionalChildUnder18: 51.0,
-		additionalChildOver18: 167.0,
-		aidAndAttendance: 95.0
+		single: 1102.04,
+		withSpouse: 1208.04,
+		withSpousewithOneParent: 1293.04,
+		withSpousewithTwoParents: 1378.04,
+		withOneParent: 1187.04,
+		withTwoParents: 1272.04,
+		withOneChild: 1173.04,
+		withSpousewithOneChild: 1287.04,
+		withSpousewithOneParentwithOneChild: 1372.04,
+		withSpousewithTwoParentswithOneChild: 1457.04,
+		withOneParentwithOneChild: 1258.04,
+		withTwoParentswithOneChild: 1343.04,
+		additionalChildUnder18: 53.0,
+		additionalChildOver18: 171.0,
+		aidAndAttendance: 98.0
 	},
 	60: {
-		single: 1361.88,
-		withSpouse: 1486.88,
-		withSpousewithOneParent: 1586.88,
-		withSpousewithTwoParents: 1686.88,
-		withOneParent: 1461.88,
-		withTwoParents: 1561.88,
-		withOneChild: 1444.88,
-		withSpousewithOneChild: 1577.88,
-		withSpousewithOneParentwithOneChild: 1677.88,
-		withSpousewithTwoParentswithOneChild: 1777.88,
-		withOneParentwithOneChild: 1544.88,
-		withTwoParentswithOneChild: 1644.88,
-		additionalChildUnder18: 62.0,
-		additionalChildOver18: 200.0,
-		aidAndAttendance: 114.0
+		single: 1395.93,
+		withSpouse: 1523.93,
+		withSpousewithOneParent: 1625.93,
+		withSpousewithTwoParents: 1727.93,
+		withOneParent: 1497.93,
+		withTwoParents: 1599.93,
+		withOneChild: 1480.93,
+		withSpousewithOneChild: 1617.93,
+		withSpousewithOneParentwithOneChild: 1719.93,
+		withSpousewithTwoParentswithOneChild: 1821.93,
+		withOneParentwithOneChild: 1582.93,
+		withTwoParentswithOneChild: 1684.93,
+		additionalChildUnder18: 63.0,
+		additionalChildOver18: 205.0,
+		aidAndAttendance: 117.0
 	},
 	70: {
-		single: 1716.28,
-		withSpouse: 1861.28,
-		withSpousewithOneParent: 1978.28,
-		withSpousewithTwoParents: 2095.28,
-		singlewithOneParent: 1833.28,
-		singlewithTwoParents: 1950.28,
-		singlewithOneChild: 1813.28,
-		withSpousewithOneChild: 1968.28,
-		withSpousewithOneParentwithOneChild: 2085.28,
-		withSpousewithTwoParentswithOneChild: 2202.28,
-		singlewithOneParentwithOneChild: 1930.28,
-		singlewithTwoParentswithOneChild: 2047.28,
-		additionalChildUnder18: 72.0,
-		additionalChildOver18: 234.0,
-		aidAndAttendance: 134.0
+		single: 1759.19,
+		withSpouse: 1908.19,
+		withSpousewithOneParent: 2028.19,
+		withSpousewithTwoParents: 2148.19,
+		singlewithOneParent: 1879.19,
+		singlewithTwoParents: 1999.19,
+		singlewithOneChild: 1859.19,
+		withSpousewithOneChild: 2018.19,
+		withSpousewithOneParentwithOneChild: 2138.19,
+		withSpousewithTwoParentswithOneChild: 2258.19,
+		singlewithOneParentwithOneChild: 1978.19,
+		singlewithTwoParentswithOneChild: 2098.19,
+		additionalChildUnder18: 74.0,
+		additionalChildOver18: 239.0,
+		aidAndAttendance: 137.0
 	},
 	80: {
-		single: 1995.01,
-		withSpouse: 2161.01,
-		withSpousewithOneParent: 2294.01,
-		withSpousewithTwoParents: 2427.01,
-		singlewithOneParent: 2128.01,
-		singlewithTwoParents: 2261.01,
-		singleithOneChild: 2106.01,
-		withSpousewithOneChild: 2283.01,
-		withSpousewithOneParentwithOneChild: 2416.01,
-		withSpousewithTwoParentswithOneChild: 2549.01,
-		singlewithOneParentwithOneChild: 2239.01,
-		singlewithTwoParentswithOneChild: 2372.01,
-		additionalChildUnder18: 82.0,
-		additionalChildOver18: 267.0,
-		aidAndAttendance: 153.0
+		single: 2044.89,
+		withSpouse: 2214.89,
+		withSpousewithOneParent: 2351.89,
+		withSpousewithTwoParents: 2488.89,
+		singlewithOneParent: 2181.89,
+		singlewithTwoParents: 2318.89,
+		singleithOneChild: 2158.89,
+		withSpousewithOneChild: 2340.89,
+		withSpousewithOneParentwithOneChild: 2477.89,
+		withSpousewithTwoParentswithOneChild: 2614.89,
+		singlewithOneParentwithOneChild: 2295.89,
+		singlewithTwoParentswithOneChild: 2432.89,
+		additionalChildUnder18: 84.0,
+		additionalChildOver18: 274.0,
+		aidAndAttendance: 157.0
 	},
 	90: {
-		single: 2241.91,
-		withSpouse: 2428.91,
-		withSpousewithOneParent: 2578.91,
-		withSpousewithTwoParents: 2728.91,
-		singlewithOneParent: 2391.91,
-		singlewithTwoParents: 2541.91,
-		singlewithOneChild: 2366.91,
-		withSpousewithOneChild: 2565.91,
-		withSpousewithOneParentwithOneChild: 2715.91,
-		withSpousewithTwoParentswithOneChild: 2865.91,
-		singlewithOneParentwithOneChild: 2516.91,
-		singlewithTwoParentswithOneChild: 2666.91,
-		additionalChildUnder18: 93.0,
-		additionalChildOver18: 301.0,
-		aidAndAttendance: 172.0
+		single: 2297.96,
+		withSpouse: 2489.96,
+		withSpousewithOneParent: 2643.96,
+		withSpousewithTwoParents: 2797.96,
+		singlewithOneParent: 2451.96,
+		singlewithTwoParents: 2605.96,
+		singlewithOneChild: 2425.96,
+		withSpousewithOneChild: 2630.96,
+		withSpousewithOneParentwithOneChild: 2784.96,
+		withSpousewithTwoParentswithOneChild: 2938.96,
+		singlewithOneParentwithOneChild: 2579.96,
+		singlewithTwoParentswithOneChild: 2733.96,
+		additionalChildUnder18: 95.0,
+		additionalChildOver18: 308.0,
+		aidAndAttendance: 176.0
 	},
 	100: {
-		single: 3737.85,
-		withSpouse: 3946.25,
-		withSpousewithOneParent: 4113.51,
-		withSpousewithTwoParents: 4280.77,
-		singlewithOneParent: 3905.11,
-		singlewithTwoParents: 4072.37,
-		singlewithOneChild: 3877.22,
-		withSpousewithOneChild: 4098.87,
-		withSpousewithoneParentwithOneChild: 4266.13,
-		withSpousewithTwoParentswithOneChild: 4433.39,
-		singlewithOneParentwithOneChild: 4044.48,
-		singlewithTwoParentswithOneChild: 4211.74,
-		additionalChildUnder18: 1033.55,
-		additionalChildOver18: 334.49,
-		aidAndAttendance: 191.14
+		single: 3831.3,
+		withSpouse: 4044.91,
+		withSpousewithOneParent: 4216.35,
+		withSpousewithTwoParents: 4387.79,
+		singlewithOneParent: 4002.74,
+		singlewithTwoParents: 4174.18,
+		singlewithOneChild: 3974.15,
+		withSpousewithOneChild: 4201.35,
+		withSpousewithoneParentwithOneChild: 4372.79,
+		withSpousewithTwoParentswithOneChild: 4544.23,
+		singlewithOneParentwithOneChild: 4145.59,
+		singlewithTwoParentswithOneChild: 4317.03,
+		additionalChildUnder18: 106.14,
+		additionalChildOver18: 342.85,
+		aidAndAttendance: 195.92
 	}
 }
 
@@ -182,25 +182,30 @@ function calculateCompensation() {
 			if (selectedBodyPart) {
 				selectionText = `${displayBodyPart} ${value}%`
 
-				// Add to the limb array
 				limb.push(selectedBodyPart)
 
-				bilateralDisabilities.push({ value, id })
-				disabilities.push({ value, id })
+				// Add to disabilities and check for bilateral pairing
+				disabilities.push({ value, id, limb: selectedBodyPart })
 
-				// Check if there's both a left and right limb selected for either arm or leg
-				matchingArms = limb.filter((l) => l === 'left-arm' || l === 'right-arm')
-				matchingLegs = limb.filter((l) => l === 'left-leg' || l === 'right-leg')
+				// Check and push bilateral pairs
+				if (
+					(selectedBodyPart === 'left-arm' ||
+						selectedBodyPart === 'right-arm') &&
+					limb.includes(
+						selectedBodyPart === 'left-arm' ? 'right-arm' : 'left-arm'
+					)
+				) {
+					pushBilateralPair(selectedBodyPart, value, id, 'arm')
+				} else if (
+					(selectedBodyPart === 'left-leg' ||
+						selectedBodyPart === 'right-leg') &&
+					limb.includes(
+						selectedBodyPart === 'left-leg' ? 'right-leg' : 'left-leg'
+					)
+				) {
+					pushBilateralPair(selectedBodyPart, value, id, 'leg')
+				}
 
-				// Check if we have both limbs for arms or legs
-				hasBilateralArms =
-					matchingArms.includes('left-arm') &&
-					matchingArms.includes('right-arm')
-				hasBilateralLegs =
-					matchingLegs.includes('left-leg') &&
-					matchingLegs.includes('right-leg')
-
-				// Reset the selected body part after it's used
 				selectedBodyPart = null
 				displayBodyPart = null
 			} else {
@@ -208,168 +213,127 @@ function calculateCompensation() {
 				disabilities.push({ value, id })
 			}
 
-			console.log(
-				bilateralDisabilities.map((disability) => disability.value) +
-					'bilateral Disabilities'
-			)
-			console.log(
-				disabilities.map((disability) => disability.value) + 'disabilities'
-			)
-
-			// Store the ID separately, associated with the value
 			selectionIds.push(id)
-
 			addSelectionBox(selectionText, id)
-
-			button.classList.remove('selected')
-			updateTotalCompensation()
-		})
-	})
-
-	document.querySelectorAll('.optional').forEach(function (element) {
-		element.addEventListener('change', function () {
 			updateTotalCompensation()
 		})
 	})
 }
 
+function pushBilateralPair(selectedBodyPart, value, id, limbType) {
+	let oppositeLimb = selectedBodyPart.includes('left')
+		? selectedBodyPart.replace('left', 'right')
+		: selectedBodyPart.replace('right', 'left')
+
+	let oppositeEntryIndex = disabilities.findIndex(
+		(disability) => disability.limb === oppositeLimb
+	)
+
+	if (oppositeEntryIndex !== -1) {
+		// Add both limbs to the bilateral array
+		bilateralDisabilities.push({ value, id, limb: selectedBodyPart })
+		bilateralDisabilities.push(disabilities[oppositeEntryIndex])
+
+		// Remove both limbs from the disabilities array
+		disabilities = disabilities.filter(
+			(d) => d.id !== id && d.id !== disabilities[oppositeEntryIndex].id
+		)
+
+		// Set bilateral flags for proper calculation
+		if (limbType === 'arm') {
+			hasBilateralArms = true
+		} else if (limbType === 'leg') {
+			hasBilateralLegs = true
+		}
+	}
+}
+
 function updateTotalCompensation() {
 	const compensation = document.getElementById('compensation')
-	const selectionsDisplay = document.getElementById('selectionsDisplay')
 	const totalDiv = document.getElementById('realPercentage')
 
 	// Check if there are no selections
-	if (selectionsDisplay.childNodes.length === 0) {
+	if (disabilities.length === 0 && bilateralDisabilities.length === 0) {
 		combinedPercentage = 0
 		totalCompensation = 0
 		document.getElementById('result').innerHTML = '0%'
-		document.getElementById('compensation').innerHTML = '$0.00'
+		compensation.innerHTML = '$0.00'
 		totalDiv.innerHTML = ''
+		document.getElementById('bilateralMessage').innerHTML = ''
 		return
 	}
 
-	let realPercentage = 0
+	let finalCombinedValues = []
+	let bilateralCombinedPercentage = 0
+	let finalBilateralValue = 0
 
-	// Calculate the total percentage for disabilities (non-bilateral)
-	if (disabilities.length > 0) {
-		// Extract value properties from the disabilities array
-		valueValues = disabilities
+	// Step 1: Handle bilateral disabilities and calculate the adjusted bilateral value
+	if (hasBilateralArms || hasBilateralLegs) {
+		// Get bilateral disabilities (e.g., left-arm and right-arm)
+		const bilateralValues = bilateralDisabilities
 			.map((disability) => disability.value)
 			.sort((a, b) => b - a)
-		realPercentage = valueValues.reduce((acc, cur) => {
+
+		// Combine bilateral disabilities
+		let bilateralCombined = bilateralValues.reduce((acc, cur) => {
 			return Math.round(acc * (1 - cur / 100) * 100) / 100
 		}, 1)
-		realPercentage = 100 - realPercentage * 100
-		combinedPercentage = roundToNearest10(realPercentage)
 
-		if (combinedPercentage >= 100) {
-			combinedPercentage = 100
-		}
+		bilateralCombinedPercentage = 100 - bilateralCombined * 100
 
-		totalCompensation = compensationRates[combinedPercentage]['single']
-		document.getElementById('result').innerHTML = combinedPercentage + '%'
+		// Apply the 10% bilateral factor
+		let bilateralFactor = parseFloat(
+			(bilateralCombinedPercentage * 0.1).toFixed(1)
+		)
+		finalBilateralValue = bilateralCombinedPercentage + bilateralFactor
+
+		document.getElementById(
+			'bilateralMessage'
+		).innerHTML = `* A bilateral factor of <strong>${bilateralFactor}%</strong> has been applied.`
+
+		// Push the final bilateral result into the array for combination
+		finalCombinedValues.push(finalBilateralValue)
 	}
 
-	// Calculate the total percentage for bilateralDisabilities if applicable
-	if (hasBilateralArms || hasBilateralLegs) {
-		// Remove existing bilateralCalculation from disabilities
-		disabilities = disabilities.filter(
-			(disability) => disability.id !== 'bilateral-adjusted'
-		)
-
-		// Remove bilateral percentages from disabilities
-		bilateralDisabilities.forEach((bilateral) => {
-			disabilities = disabilities.filter(
-				(disability) => disability.id !== bilateral.id
-			)
-		})
-
-		// Recalculate valueValues after updating disabilities
-		let valueValues = disabilities
+	// Step 2: Handle non-bilateral disabilities
+	if (disabilities.length > 0) {
+		const nonBilateralValues = disabilities
 			.map((disability) => disability.value)
 			.sort((a, b) => b - a)
 
-		// Calculate the non-bilateral realPercentage after removing bilateral disabilities
-		if (valueValues.length > 0) {
-			realPercentage = valueValues.reduce((acc, cur) => {
-				return (acc * (1 - cur / 100) * 100) / 100
-			}, 1)
-			realPercentage = 100 - realPercentage * 100
-		} else {
-			realPercentage = 0 // If all disabilities are removed, set realPercentage to 0
-		}
-		console.log(realPercentage + ' realPercentage bilateral removed')
-
-		// Extract value properties from the bilateralDisabilities array
-		let bilateralValueValues = bilateralDisabilities
-			.map((disability) => disability.value)
-			.sort((a, b) => b - a)
-
-		// Recalculate bilateralCalculation after updating bilateralDisabilities
-		let bilateralCalculation = bilateralValueValues.reduce((acc, cur) => {
-			return (acc * (1 - cur / 100) * 100) / 100
-		}, 1)
-		bilateralCalculation = 100 - Math.round(bilateralCalculation * 100)
-
-		// Apply 10% bilateral factor
-		let bilateralFactor = parseFloat((bilateralCalculation * 0.1).toFixed(1))
-
-		// Create the new adjusted bilateral factor
-		let adjustedBilateralFactor = {
-			id: 'bilateral-adjusted',
-			value: bilateralCalculation + bilateralFactor
-		}
-
-		// Add the new adjusted bilateral factor to the disabilities array
-		disabilities.push(adjustedBilateralFactor)
-
-		// Recalculate combined values including the adjusted factor
-		let combinedValues = disabilities
-			.map((disability) => disability.value)
-			.sort((a, b) => b - a)
-		realPercentage = combinedValues.reduce((acc, cur) => {
-			return (acc * (1 - cur / 100) * 100) / 100
-		}, 1)
-		realPercentage = 100 - Math.round(realPercentage * 100)
-
-		// Adjust for combined percentage
-		combinedPercentage = roundToNearest10(realPercentage)
-		if (combinedPercentage >= 100) {
-			combinedPercentage = 100
-		}
-
-		console.log(
-			bilateralDisabilities.map((disability) => disability.value) +
-				'bilateral Disabilities after push'
-		)
-		console.log(
-			disabilities.map((disability) => disability.value) +
-				'disabilities after push'
-		)
-
-		// Bilateral message
-		let bilateralMessage = ''
-		if (hasBilateralArms || hasBilateralLegs) {
-			bilateralMessage = `* A bilateral factor of <strong>${bilateralFactor}%</strong> has been applied.`
-		}
-
-		document.getElementById('bilateralMessage').innerHTML = bilateralMessage
-
-		totalCompensation = compensationRates[combinedPercentage]['single']
-		document.getElementById('result').innerHTML = combinedPercentage + '%'
+		finalCombinedValues = finalCombinedValues.concat(nonBilateralValues)
 	}
 
-	// Reset bilateral factor if no bilateral limbs remain
-	if (bilateralDisabilities.length === 1) {
-		bilateralFactor = 0
-		document.getElementById('bilateralMessage').innerHTML = ''
+	// Step 3: Calculate the total combined percentage using the VA formula
+	let combinedFinalPercentage = finalCombinedValues.reduce((acc, cur) => {
+		return Math.round(acc * (1 - cur / 100) * 100) / 100
+	}, 1)
+	combinedFinalPercentage = 100 - combinedFinalPercentage * 100
+
+	// Round the final combined percentage
+	combinedPercentage = roundToNearest10(combinedFinalPercentage)
+	if (combinedPercentage >= 100) {
+		combinedPercentage = 100
 	}
 
-	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
+	// Fix the rounding message to display the correct combined percentage
+	let roundingMessage = ''
+	if (Math.abs(combinedFinalPercentage - combinedPercentage) > 0.05) {
+		let roundedDirection =
+			combinedPercentage > combinedFinalPercentage ? 'up' : 'down'
+		roundingMessage = `Your calculated rating is <strong>${combinedFinalPercentage.toFixed(
+			1
+		)}%</strong>, which the VA rounds ${roundedDirection} to <strong>${combinedPercentage}%</strong>.`
+	}
+	totalDiv.innerHTML = roundingMessage
+
+	// Update displayed compensation
+	totalCompensation = compensationRates[combinedPercentage]['single']
 	document.getElementById('result').innerHTML = combinedPercentage + '%'
+	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
 
 	// Handle optional selections for compensation
-	let selectedOptions = []
+	selectedOptions = []
 	document.querySelectorAll('.optional:checked').forEach(function (optional) {
 		if (optional.id !== 'none') {
 			selectedOptions.push(optional.id)
@@ -417,22 +381,11 @@ function updateTotalCompensation() {
 		)
 	}
 
-	realPercentage = Math.min(realPercentage, 100)
-	const tolerance = 0.05
-
-	// Handle rounding messages
-	let roundingMessage = ''
-	if (
-		Math.abs(realPercentage - 100) > tolerance &&
-		realPercentage !== combinedPercentage
-	) {
-		const roundedDirection = combinedPercentage > realPercentage ? 'up' : 'down'
-		roundingMessage = `Your calculated rating is <strong>${realPercentage.toFixed(
-			0
-		)}%</strong> which the VA rounds ${roundedDirection} to <strong>${combinedPercentage}%.</strong>`
+	// Reset bilateral factor and message if no bilateral pairs remain
+	if (!hasBilateralArms && !hasBilateralLegs) {
+		bilateralFactor = 0
+		document.getElementById('bilateralMessage').innerHTML = '' // Clear the message
 	}
-
-	totalDiv.innerHTML = roundingMessage
 
 	// Update displayed compensation
 	compensation.innerHTML = '$' + totalCompensation.toFixed(2)
@@ -457,20 +410,85 @@ function addSelectionBox(text, id) {
 	})
 }
 
-function removeSelection(id, box) {
-	// Remove from disabilities using the ID
-	disabilities = disabilities.filter((disability) => disability.id !== id)
-	bilateralDisabilities = bilateralDisabilities.filter((b) => b.id !== id)
-
-	// Remove from limb and selectionIds arrays
-	let index = limb.findIndex((l) => l.id === id)
-	if (index !== -1) {
-		limb.splice(index, 1)
+function addToBilateralDisabilities(selectedBodyPart, value, id) {
+	if (selectedBodyPart === 'left-arm' || selectedBodyPart === 'right-arm') {
+		let oppositeArm = selectedBodyPart === 'left-arm' ? 'right-arm' : 'left-arm'
+		if (limb.includes(oppositeArm)) {
+			// Add both limbs to the bilateral array if not already added
+			if (
+				!bilateralDisabilities.some(
+					(d) => d.limb === selectedBodyPart || d.limb === oppositeArm
+				)
+			) {
+				bilateralDisabilities.push({ value, id, limb: selectedBodyPart })
+				// Find and push the opposite limb percentage
+				let oppositeIndex = limb.findIndex((l) => l === oppositeArm)
+				bilateralDisabilities.push({
+					value: disabilities[oppositeIndex].value,
+					id: disabilities[oppositeIndex].id,
+					limb: oppositeArm
+				})
+			}
+		}
 	}
 
-	// Remove the selection box
-	box.remove()
+	if (selectedBodyPart === 'left-leg' || selectedBodyPart === 'right-leg') {
+		let oppositeLeg = selectedBodyPart === 'left-leg' ? 'right-leg' : 'left-leg'
+		if (limb.includes(oppositeLeg)) {
+			// Add both limbs to the bilateral array if not already added
+			if (
+				!bilateralDisabilities.some(
+					(d) => d.limb === selectedBodyPart || d.limb === oppositeLeg
+				)
+			) {
+				bilateralDisabilities.push({ value, id, limb: selectedBodyPart })
+				// Find and push the opposite limb percentage
+				let oppositeIndex = limb.findIndex((l) => l === oppositeLeg)
+				bilateralDisabilities.push({
+					value: disabilities[oppositeIndex].value,
+					id: disabilities[oppositeIndex].id,
+					limb: oppositeLeg
+				})
+			}
+		}
+	}
+}
 
+function removeSelection(id, box) {
+	// Find the disability in either array
+	let removedDisability =
+		disabilities.find((d) => d.id === id) ||
+		bilateralDisabilities.find((d) => d.id === id)
+
+	// Remove it from its respective array
+	disabilities = disabilities.filter((d) => d.id !== id)
+	bilateralDisabilities = bilateralDisabilities.filter((d) => d.id !== id)
+
+	// Check for broken bilateral pair
+	if (removedDisability) {
+		let limbType = removedDisability.limb?.includes('arm') ? 'arm' : 'leg'
+		let oppositeLimb = removedDisability.limb?.includes('left')
+			? removedDisability.limb.replace('left', 'right')
+			: removedDisability.limb.replace('right', 'left')
+
+		// If the opposite limb is still in bilateralDisabilities, reassign it to disabilities
+		let oppositeEntry = bilateralDisabilities.find(
+			(d) => d.limb === oppositeLimb
+		)
+		if (oppositeEntry) {
+			disabilities.push(oppositeEntry)
+			bilateralDisabilities = bilateralDisabilities.filter(
+				(d) => d.id !== oppositeEntry.id
+			)
+		}
+	}
+
+	// Reset the bilateral flags if pairs are broken
+	hasBilateralArms = bilateralDisabilities.some((d) => d.limb?.includes('arm'))
+	hasBilateralLegs = bilateralDisabilities.some((d) => d.limb?.includes('leg'))
+
+	// Clear the box from the display
+	box.remove()
 	updateTotalCompensation()
 }
 
@@ -548,3 +566,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 })
 
 calculateCompensation()
+
+// Add a class to the parent label when the checkbox is checked
+document
+	.querySelectorAll('input[type="checkbox"]')
+	.forEach(function (checkbox) {
+		checkbox.addEventListener('change', function () {
+			if (checkbox.checked) {
+				checkbox.parentElement.classList.add('checked')
+			} else {
+				checkbox.parentElement.classList.remove('checked')
+			}
+		})
+	})
